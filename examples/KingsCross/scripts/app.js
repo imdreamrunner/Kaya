@@ -7,7 +7,7 @@ var GameStage = Kaya.Stage.extend({
 });
 
 App = Kaya.App.extend({
-  frame: '#GameFrame',
+  documentObject: '#Game',
   size: {
     width: 1024,
     height: 768

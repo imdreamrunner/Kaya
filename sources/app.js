@@ -3,20 +3,20 @@ Kaya.App = Kaya.Class.extend({
     if (!$) {
       throw new Error('jQuery is not loaded');
     }
-    if (!this.frame) {
-      throw new Error('No app frame is specified.');
+    if (!this.documentObject) {
+      throw new Error('No app documentObject is specified.');
     }
-    this.$frame = $(this.frame);
-    if (this.$frame.length === 0) {
-      throw new Error('App frame "' + this.frame + '" is not found.');
+    this.$documentObject = $(this.documentObject);
+    if (this.$documentObject.length === 0) {
+      throw new Error('App documentObject "' + this.documentObject + '" is not found.');
     }
-    if (this.$frame.length > 1) {
-      this.$frame = this.$frame[0];
+    if (this.$documentObject.length > 1) {
+      this.$documentObject = this.$documentObject[0];
     }
     this.size = this.size || {};
     this.size.width = this.size.width || 400;
     this.size.height = this.size.height || 300;
-    this.$frame.css({
+    this.$documentObject.css({
       'background': this.background || '#000000',
       'width': this.size.width,
       'height': this.size.height

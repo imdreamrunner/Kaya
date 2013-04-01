@@ -1,6 +1,6 @@
 module('Event');
 
-test('Add Event', function () {
+test('.on(), .trigger()', function () {
   expect(2);
   var Class = Kaya.Class.extend();
   var instance = new Class;
@@ -15,7 +15,7 @@ test('Add Event', function () {
   instance.trigger('something');
 });
 
-test('Remove Event', function () {
+test('.off()', function () {
   expect(2);
   var Class = Kaya.Class.extend();
   var instance = new Class;
@@ -37,7 +37,7 @@ test('Remove Event', function () {
   instance.trigger('something');
 });
 
-test('Listen Event', function () {
+test('.listenTo()', function () {
   expect(1);
   var SomeClass = Kaya.Class.extend({
     doA: function() {
@@ -51,11 +51,9 @@ test('Listen Event', function () {
   }
   listener.listenTo(listening, 'A', handler);
   listening.doA();
-  listener.stopListening();
-  listening.doA();
 });
 
-test('Stop Listening Event', function () {
+test('.stopListening()', function () {
   expect(4);
   var SomeClass = Kaya.Class.extend({
     doABC: function() {
@@ -80,7 +78,7 @@ test('Stop Listening Event', function () {
   listening.doABC();
 });
 
-test('Once', function () {
+test('.once()', function () {
   expect(1);
   var ClassA = Kaya.Class.extend({
     initialize: function() {
@@ -96,4 +94,21 @@ test('Once', function () {
   var a = new ClassA();
   a.doA();
   a.doA();
+});
+
+test('.listenToOnce()', function () {
+  expect(1);
+  var Class = Kaya.Class.extend({
+    doA: function() {
+      this.trigger('A');
+    }
+  });
+  var handler = function() {
+    ok(true, this.name + ' event fires.')
+  }
+  var a = new Class();
+  var b = new Class();
+  a.listenToOnce(b, 'A', handler);
+  b.doA();
+  b.doA();
 });

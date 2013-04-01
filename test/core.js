@@ -1,11 +1,11 @@
 module('Core');
 
-test('Loading', function () {
+test('load', function () {
   expect(1);
   ok(Kaya, 'loaded');
 });
 
-test('Extend', function () {
+test('.extend()', function () {
   expect(5);
   var Parent = Kaya.Class.extend({
     initialize: function(value) {

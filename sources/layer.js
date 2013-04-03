@@ -1,4 +1,4 @@
-Kaya.Layer = Kaya.Class.extend({
+Kaya.Layer = Kaya.Object.extend({
   _children: [],
 
   constructor: function() {
@@ -23,9 +23,8 @@ Kaya.Layer = Kaya.Class.extend({
         });
         this.parent.$DOM.append(this.$DOM);
       }
-      return true;
     } else {
-      return false;
+      throw new Error('Unable to create DOM');
     }
   },
 

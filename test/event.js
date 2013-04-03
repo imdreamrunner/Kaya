@@ -2,7 +2,7 @@ module('Event');
 
 test('.on(), .trigger()', function () {
   expect(2);
-  var Class = Kaya.Class.extend();
+  var Class = Kaya.Object.extend();
   var instance = new Class;
   var handler = function(event) {
     ok(true, event.name + ' trigger event.');
@@ -17,7 +17,7 @@ test('.on(), .trigger()', function () {
 
 test('.off()', function () {
   expect(2);
-  var Class = Kaya.Class.extend();
+  var Class = Kaya.Object.extend();
   var instance = new Class;
   var handler = function(event) {
     ok(true, event.name + ' trigger event.');
@@ -39,7 +39,7 @@ test('.off()', function () {
 
 test('.listenTo()', function () {
   expect(1);
-  var SomeClass = Kaya.Class.extend({
+  var SomeClass = Kaya.Object.extend({
     doA: function() {
       this.trigger('A');
     }
@@ -55,7 +55,7 @@ test('.listenTo()', function () {
 
 test('.stopListening()', function () {
   expect(4);
-  var SomeClass = Kaya.Class.extend({
+  var SomeClass = Kaya.Object.extend({
     doABC: function() {
       this.trigger('A').trigger('B').trigger('C');
     }
@@ -80,7 +80,7 @@ test('.stopListening()', function () {
 
 test('.once(), .listenToOnce', function () {
   expect(2);
-  var Class = Kaya.Class.extend();
+  var Class = Kaya.Object.extend();
   var instance = new Class;
   var instance2 = new Class;
   var handler = function(event) {

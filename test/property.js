@@ -2,7 +2,7 @@ module('Property');
 
 test('.set(), .get()', function () {
   expect(4);
-  var Class = Kaya.Class.extend();
+  var Class = Kaya.Object.extend();
   var instance = new Class();
   ok(instance.get('new') === undefined, 'undefined');
   instance.set('new', 100);
@@ -17,7 +17,7 @@ test('.set(), .get()', function () {
 
 test('.previous(), .hasChanged()', function () {
   expect(5);
-  var Class = Kaya.Class.extend();
+  var Class = Kaya.Object.extend();
   var instance = new Class();
   instance.set('name', 'value');
   instance.set('name', 'newValue');
@@ -39,7 +39,7 @@ test('.previous(), .hasChanged()', function () {
 
 test('.unset()', function() {
   expect(2);
-  var Class = Kaya.Class.extend();
+  var Class = Kaya.Object.extend();
   var instance = new Class();
   instance.set('a', 1);
   ok(instance.get('a'), 'set');
@@ -49,7 +49,7 @@ test('.unset()', function() {
 
 test('"change" event', function () {
   expect(2);
-  var Class = Kaya.Class.extend({
+  var Class = Kaya.Object.extend({
     constructor: function() {
       this.on('change', this.changeHandler);
     },

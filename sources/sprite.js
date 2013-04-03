@@ -1,4 +1,4 @@
-Kaya.Sprite = Kaya.Class.extend({
+Kaya.Sprite = Kaya.Object.extend({
   schedule: [],
 
   render: function() {},
@@ -10,7 +10,7 @@ Kaya.Sprite = Kaya.Class.extend({
     this.on('change', this.render);
 
     // Clone the schedule for counting.
-    this._schedule = Kaya.Utilities.clone(this.schedule);
+    // this._schedule = Kaya.Utilities.clone(this.schedule);
   },
 
   run: function(parent) {
@@ -33,9 +33,8 @@ Kaya.Sprite = Kaya.Class.extend({
         this.parent.$DOM.append(this.$DOM);
         this.context = this.$DOM[0].getContext('2d');
       }
-      return true;
     } else {
-      return false;
+      throw new Error('Unable to create DOM');
     }
   },
 
@@ -47,5 +46,14 @@ Kaya.Sprite = Kaya.Class.extend({
       }
       schedule.next--;
     }, this);
+  },
+
+  remove: function() {
+    if (this.parent) {
+      this.parent.detach(this._id);
+    }
+    this.off();
+    this.stopListening();
+    console.log('sprite is removed.');
   }
 });

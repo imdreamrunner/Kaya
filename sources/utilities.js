@@ -12,7 +12,6 @@ Kaya.Utilities = {
         }
       }
     });
-
     return target;
   },
 

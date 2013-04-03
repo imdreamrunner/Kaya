@@ -1,4 +1,4 @@
-Kaya.Stage = Kaya.Class.extend({
+Kaya.Stage = Kaya.Object.extend({
   _layers: [],
 
   constructor: function() {

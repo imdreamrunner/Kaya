@@ -1,4 +1,4 @@
-Kaya.App = Kaya.Class.extend({
+Kaya.App = Kaya.Object.extend({
   constructor: function() {
     var _this = this;
     if (!$) {

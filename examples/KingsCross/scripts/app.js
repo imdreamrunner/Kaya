@@ -5,8 +5,8 @@ var WelcomeStage = Kaya.Stage.extend({
     var sprite = new Kaya.Sprite.Rectangular({
       width: 100,
       height: 100,
-      top: 100,
-      left: 100,
+      x: 100,
+      y: 100,
       color: '#FFFFFF'
     });
     layer.attach(sprite);

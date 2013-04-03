@@ -1,11 +1,16 @@
 var WelcomeStage = Kaya.Stage.extend({
   initialize: function() {
-
+    var layer = new Kaya.Layer();
+    this.attach(layer);
+    var sprite = new Kaya.Sprite.Rectangular({
+      width: 100,
+      height: 100,
+      top: 100,
+      left: 100,
+      color: '#FFFFFF'
+    });
+    layer.attach(sprite);
   }
-});
-
-var GameStage = Kaya.Stage.extend({
-
 });
 
 App = Kaya.App.extend({
@@ -14,7 +19,9 @@ App = Kaya.App.extend({
     width: 1024,
     height: 768
   },
-  firstStage: new WelcomeStage()
+  initialize: function() {
+    this.runStage(new WelcomeStage());
+  }
 });
 
 var app = new App();

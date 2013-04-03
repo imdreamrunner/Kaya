@@ -2,7 +2,7 @@
  * Utilities use by Kaya framework.
  */
 
-Kaya.utilities = {
+Kaya.Utilities = {
   extend: function(target) {
     var sources = Array.prototype.slice.call(arguments, 1);
     sources.forEach(function(source){
@@ -40,7 +40,7 @@ Kaya.utilities = {
 
     // Handle Object
     if (source instanceof Object) {
-      target = Kaya.utilities.extend({}, source);
+      target = Kaya.Utilities.extend({}, source);
       return target;
     }
 

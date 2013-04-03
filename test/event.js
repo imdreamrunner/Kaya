@@ -77,3 +77,17 @@ test('.stopListening()', function () {
   listener.stopListening(handler);
   listening.doABC();
 });
+
+test('.once(), .listenToOnce', function () {
+  expect(2);
+  var Class = Kaya.Class.extend();
+  var instance = new Class;
+  var instance2 = new Class;
+  var handler = function(event) {
+    ok(true, event.name + ' trigger event.');
+  }
+  instance.once('something', handler);
+  instance2.listenToOnce(instance,'something', handler);
+  instance.trigger('something');
+  instance.trigger('something');
+});

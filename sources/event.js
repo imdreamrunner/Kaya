@@ -74,6 +74,16 @@ Kaya.Class.prototype.on = function(name, handler) {
   return this;
 };
 
+// Listen to a self event once.
+Kaya.Class.prototype.once = function(name, handler) {
+  var onceHandler = function(event) {
+    handler.apply(this, arguments);
+    event.remove();
+  }
+  this.on(name, onceHandler);
+  return this;
+};
+
 // Remove event handler from self.
 Kaya.Class.prototype.off = function() {
   // Read the arguments
@@ -102,6 +112,16 @@ Kaya.Class.prototype.off = function() {
 // Listen to an event of another object.
 Kaya.Class.prototype.listenTo = function(target, name, handler) {
   new Kaya.Event(this, target, name, handler);
+  return this;
+};
+
+// Listen to an event of another object once.
+Kaya.Class.prototype.listenToOnce = function(target, name, handler) {
+  var onceHandler = function(event) {
+    handler.apply(this, arguments);
+    event.remove();
+  }
+  this.listenTo(target, name, onceHandler);
   return this;
 };
 

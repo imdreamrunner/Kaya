@@ -8,7 +8,7 @@ Kaya.Class.prototype.get = function(name) {
     if (name) {
       return this._properties[name] || undefined;
     } else {
-      return Kaya.utilities.clone(this._properties);
+      return Kaya.Utilities.clone(this._properties);
     }
   } else {
     return undefined;
@@ -67,7 +67,7 @@ Kaya.Class.prototype.previous = function(name) {
     if (name) {
       return this._previous[name] || undefined;
     } else {
-      return Kaya.utilities.clone(this._previous);
+      return Kaya.Utilities.clone(this._previous);
     }
   } else {
     return undefined;
@@ -80,5 +80,5 @@ Kaya.Class.prototype.hasChanged = function(name) {
 };
 
 Kaya.Class.prototype.changes = function() {
-  return Kaya.utilities.clone(this._changes);
+  return Kaya.Utilities.clone(this._changes);
 };

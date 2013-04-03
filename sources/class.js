@@ -46,8 +46,14 @@ Kaya.Class.extend = function(prop) {
   // The dummy class constructor
   function Class() {
     // All construction is actually done in the initialize method
-    if (!initializingClass && this.initialize) {
-      this.initialize.apply(this, arguments);
+    if (!initializingClass) {
+      // Generate an unique id for every class.
+      this._id = Kaya.uniqueId();
+      // Call the initialize method.
+
+      if (this.constructor) {
+        this.constructor.apply(this, arguments);
+      }
     }
   }
 
@@ -55,7 +61,7 @@ Kaya.Class.extend = function(prop) {
   Class.prototype = prototype;
 
   // Enforce the constructor to be what we expect
-  Class.prototype.constructor = Class;
+  // Class.prototype.constructor = Class;
 
   Class.extend = Kaya.Class.extend;
   Class.join = Kaya.Class.join;

@@ -15,5 +15,5 @@ var uniqueIdNumber = 0;
  * Generate a unique id, which can be use everywhere you like.
  */
 Kaya.uniqueId = function() {
-  return uniqueIdNumber++;
+  return ++uniqueIdNumber;
 };

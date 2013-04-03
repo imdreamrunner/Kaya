@@ -1,9 +1,9 @@
 Kaya.Article = Kaya.Class.extend({
-  initialize: function(layer) {
+  constructor: function(layer) {
     this.layer = layer;
   },
 
-  remove: function() {
-    console.log('article is removed.');
+  refresh: function() {
+
   }
 });

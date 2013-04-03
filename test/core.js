@@ -8,7 +8,7 @@ test('load', function () {
 test('.extend()', function () {
   expect(5);
   var Parent = Kaya.Class.extend({
-    initialize: function(value) {
+    constructor: function(value) {
       this.value = value;
     },
     testValue: 2,

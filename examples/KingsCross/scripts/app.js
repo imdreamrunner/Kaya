@@ -1,5 +1,7 @@
 var WelcomeStage = Kaya.Stage.extend({
+  initialize: function() {
 
+  }
 });
 
 var GameStage = Kaya.Stage.extend({
@@ -12,9 +14,7 @@ App = Kaya.App.extend({
     width: 1024,
     height: 768
   },
-  firstStage: WelcomeStage
+  firstStage: new WelcomeStage()
 });
 
 var app = new App();
-
-app.changeStage(GameStage);

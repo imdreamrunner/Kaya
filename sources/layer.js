@@ -1,9 +1,14 @@
 Kaya.Layer = Kaya.Class.extend({
-  initialize: function(stage) {
+  actors: [],
+
+  constructor: function(stage) {
     this.stage = stage;
+    this.on('refresh', this.refresh);
   },
 
-  remove: function() {
-    console.log('layer is removed.');
+  refresh: function() {
+    this.actors.forEach(function(actor){
+      actor.trigger('refresh');
+    });
   }
 });

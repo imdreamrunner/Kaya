@@ -16,7 +16,9 @@ Kaya.Event = function(self, target, name, handler) {
 
 Kaya.Event.prototype = {
   trigger: function() {
-    this.handler.apply(this, arguments);
+    var argumentList = Array.prototype.slice.call(arguments);
+    argumentList.push(this)
+    this.handler.apply(this.self, argumentList);
   },
   remove: function() {
     this.self.removeListening(this._id);
@@ -72,16 +74,6 @@ Kaya.Class.prototype.on = function(name, handler) {
   return this;
 };
 
-// Add an event handler that will trigger only once.
-Kaya.Class.prototype.once = function(name, handler) {
-  var onceHandler = function() {
-    handler.apply(this, arguments);
-    this.remove();
-  }
-  this.on(name, onceHandler);
-  return this;
-};
-
 // Remove event handler from self.
 Kaya.Class.prototype.off = function() {
   // Read the arguments
@@ -110,16 +102,6 @@ Kaya.Class.prototype.off = function() {
 // Listen to an event of another object.
 Kaya.Class.prototype.listenTo = function(target, name, handler) {
   new Kaya.Event(this, target, name, handler);
-  return this;
-};
-
-// Listen to an event of another object once.
-Kaya.Class.prototype.listenToOnce = function(target, name, handler) {
-  var onceHandler = function() {
-    handler.apply(this, arguments);
-    this.remove();
-  }
-  this.listenTo(target, name, onceHandler);
   return this;
 };
 

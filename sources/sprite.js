@@ -3,6 +3,7 @@
  */
 
 Kaya.Sprite = Kaya.Object.extend({
+  // Default render function, which is empty.
   render: function() {},
 
   constructor: function(properties) {
@@ -37,6 +38,7 @@ Kaya.Sprite = Kaya.Object.extend({
     }
   },
 
+  // Will be called by its parent at fps.
   refresh: function() {
     if (this._schedules){
       this._schedules.forEach(function(schedule) {
@@ -50,6 +52,8 @@ Kaya.Sprite = Kaya.Object.extend({
     }
   },
 
+  // Run an action immediately.
+  // Multiple actions can be run at the same time.
   runAction: function(action, callback) {
     this._actions = this._actions || [];
     this._actions.push(action);
@@ -57,6 +61,8 @@ Kaya.Sprite = Kaya.Object.extend({
     return this;
   },
 
+  // Remove an action from action list.
+  // Will be call by Action when it finished.
   finishAction: function(action) {
     var index = this._actions.indexOf(action);
     if (index > -1) {
@@ -66,6 +72,7 @@ Kaya.Sprite = Kaya.Object.extend({
     }
   },
 
+  // Add and action to action queue.
   enqueueAction: function(action) {
     this._actionQueue = this._actionQueue || [];
     this._actionQueue.push(action);

@@ -44,8 +44,11 @@ Kaya.Action.Move = Kaya.Action.extend({
     }
   },
 
+  // Overwrite the default run method.
   run: function(sprite){
+    // Remember to call the origin method.
     this._super.apply(this, arguments);
+    // Decide the speed by checking it direction.
     this.speedX = sprite.get('x') < this.target.x ? 1 : -1;
     this.speedY = sprite.get('y') < this.target.y ? 1 : -1;
     this.setSchedule(1, this.updater);

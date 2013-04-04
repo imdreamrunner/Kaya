@@ -20,7 +20,7 @@ var WelcomeStage = Kaya.Stage.extend({
       color: '#FFFFFF'
     });
     layer.attach(sprite);
-    sprite.enqueueAction(new Kaya.Action.MoveTo(400, 100))
+    sprite.enqueueAction(new Kaya.Action.MoveTo(400, 200))
       .enqueueAction(new Kaya.Action.MoveTo(300, 100));
   }
 });

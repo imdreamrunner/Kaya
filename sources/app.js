@@ -1,3 +1,7 @@
+/*
+ * Class App.
+ */
+
 Kaya.App = Kaya.Object.extend({
   constructor: function() {
     var _this = this;

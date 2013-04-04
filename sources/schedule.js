@@ -8,14 +8,14 @@ Kaya.Schedule = Kaya.Class.extend({
 
   refresh: function() {
     if (!this._next) {
-      this.handler.call(self, this);
+      this.handler.call(this.self, this);
       this._next = this.interval;
     }
     this._next--;
   },
 
   remove: function() {
-    this.self.removeSchedule(this._id);
+    this.self.removeSchedule(this);
   }
 });
 
@@ -25,13 +25,17 @@ ScheduleMethods = {
     this._schedules.push(new Kaya.Schedule(this, interval, handler));
   },
 
-  removeSchedule: function(scheduleId) {
-    for (var i in this._schedules) {
-      if (this._schedules[i]._id === scheduleId) {
-        this._schedules.splice(i, 1);
-        return;
+  removeSchedule: function(schedule) {
+    if (schedule) {
+      var index = this._schedules.indexOf(schedule);
+      if (index > -1) {
+        this._schedules.splice(index, 1);
+      } else {
+        throw new Error('Unable to remove schedule: id not exist.');
       }
+    } else {
+      // Remove all schedules.
+      this._schedules.length = 0;
     }
-    throw new Error('Unable to remove schedule: id not exist.')
   }
 };

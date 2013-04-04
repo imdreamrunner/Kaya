@@ -1,6 +1,8 @@
-Kaya.Sprite = Kaya.Object.extend({
-  schedule: [],
+/*
+ * Class Sprite.
+ */
 
+Kaya.Sprite = Kaya.Object.extend({
   render: function() {},
 
   constructor: function(properties) {
@@ -8,9 +10,6 @@ Kaya.Sprite = Kaya.Object.extend({
 
     this.on('refresh', this.refresh);
     this.on('change', this.render);
-
-    // Clone the schedule for counting.
-    // this._schedule = Kaya.Utilities.clone(this.schedule);
   },
 
   run: function(parent) {
@@ -39,9 +38,50 @@ Kaya.Sprite = Kaya.Object.extend({
   },
 
   refresh: function() {
-    this._schedule.forEach(function(schedule) {
-      schedule.refresh();
-    }, this);
+    if (this._schedules){
+      this._schedules.forEach(function(schedule) {
+        schedule.refresh();
+      }, this);
+    }
+    if (this._actions) {
+      this._actions.forEach(function(action) {
+        action.refresh();
+      }, this);
+    }
+  },
+
+  runAction: function(action, callback) {
+    this._actions = this._actions || [];
+    this._actions.push(action);
+    callback ? action.run(this, callback) : action.run(this);
+    return this;
+  },
+
+  finishAction: function(action) {
+    var index = this._actions.indexOf(action);
+    if (index > -1) {
+      this._actions.splice(index, 1);
+    } else {
+      throw new Error('Unable to remove finished action.');
+    }
+  },
+
+  enqueueAction: function(action) {
+    this._actionQueue = this._actionQueue || [];
+    this._actionQueue.push(action);
+    if (!this._queueing) {
+      this._runQueueAction();
+    }
+    return this;
+  },
+
+  _runQueueAction: function() {
+    if (this._actionQueue && this._actionQueue.length > 0) {
+      this._queueing = true;
+      this.runAction(this._actionQueue.shift(), this._runQueueAction);
+    } else {
+      this._queueing = false;
+    }
   },
 
   remove: function() {
@@ -54,4 +94,4 @@ Kaya.Sprite = Kaya.Object.extend({
   }
 });
 
-Kaya.Utilities.extend(Kaya.Sprite, ScheduleMethods);
+Kaya.Utilities.extend(Kaya.Sprite.prototype, ScheduleMethods);

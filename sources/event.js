@@ -14,9 +14,8 @@ Kaya.Event = Kaya.Class.extend({
     self.addListening(this);
   },
 
-  trigger: function() {
-    var argumentList = Array.prototype.slice.call(arguments);
-    argumentList.push(this)
+  trigger: function(argumentList) {
+    argumentList.splice(0, 0, this);
     this.handler.apply(this.self, argumentList);
   },
 
@@ -152,10 +151,12 @@ var EventMethods = {
 
   // Trigger an event.
   trigger: function(name) {
+    var argumentList = Array.prototype.slice.call(arguments);
+    argumentList.splice(0, 1);
     if (this._events) {
       for (var i in this._events) {
         if (this._events[i].name === name) {
-          this._events[i].trigger();
+          this._events[i].trigger(argumentList);
         }
       }
     }

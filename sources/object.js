@@ -84,3 +84,5 @@ Kaya.Object = Kaya.Class.extend({
     return Kaya.Utilities.clone(this._changes);
   }
 });
+
+Kaya.Utilities.extend(Kaya.Object.prototype, EventMethods);

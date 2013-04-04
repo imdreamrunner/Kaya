@@ -21,3 +21,5 @@ Kaya.Action.Move = Kaya.Action.extend({
 
   }
 });
+
+Kaya.Utilities.extend(Kaya.Action, ScheduleMethods);

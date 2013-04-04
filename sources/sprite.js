@@ -40,11 +40,7 @@ Kaya.Sprite = Kaya.Object.extend({
 
   refresh: function() {
     this._schedule.forEach(function(schedule) {
-      if (!schedule.next) {
-        schedule.next = schedule.interval;
-        schedule.callback.call(this);
-      }
-      schedule.next--;
+      schedule.refresh();
     }, this);
   },
 
@@ -57,3 +53,5 @@ Kaya.Sprite = Kaya.Object.extend({
     console.log('sprite is removed.');
   }
 });
+
+Kaya.Utilities.extend(Kaya.Sprite, ScheduleMethods);

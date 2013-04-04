@@ -6,7 +6,6 @@
 
 Kaya.Event = Kaya.Class.extend({
   constructor: function(self, target, name, handler) {
-    this._id = Kaya.uniqueId();
     this.self = self;
     this.target = target;
     this.name = name;
@@ -81,7 +80,7 @@ var EventMethods = {
     var onceHandler = function(event) {
       handler.apply(this, arguments);
       event.remove();
-    }
+    };
     this.on(name, onceHandler);
     return this;
   },
@@ -163,5 +162,3 @@ var EventMethods = {
     return this;
   }
 };
-
-Kaya.Utilities.extend(Kaya.Object.prototype, EventMethods);

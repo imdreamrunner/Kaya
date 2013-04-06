@@ -3,6 +3,7 @@ Kaya.Layer = Kaya.Object.extend({
 
   constructor: function() {
     this.on('refresh', this.refresh);
+    this.on('touchEvent', this.touchEventHandler);
   },
 
   run: function(parent){
@@ -61,8 +62,18 @@ Kaya.Layer = Kaya.Object.extend({
     return false;
   },
 
+  eachChild: function(callback) {
+    this._children.forEach(callback, this);
+  },
+
+  touchEventHandler: function(event, touch) {
+    this.eachChild(function(child) {
+      child.trigger('touchEvent', touch);
+    });
+  },
+
   refresh: function() {
-    this._children.forEach(function(child) {
+    this.eachChild(function(child) {
       child.trigger('refresh');
     });
   },

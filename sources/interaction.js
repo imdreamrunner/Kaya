@@ -26,11 +26,12 @@ Kaya.Interaction.TouchEvent = Kaya.Class.extend({
   },
 
   mouseDown: function(e) {
-    var position = {
+    var touch = {
+      status: 'start',
       x: e.offsetX,
       y: e.offsetY
     };
-    this.app.trigger('touchstart', position);
+    this.app.trigger('touchEvent',touch);
   },
 
   touchHandler: function(e) {

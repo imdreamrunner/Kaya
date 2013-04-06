@@ -3,14 +3,12 @@
  */
 
 Kaya.Sprite = Kaya.Object.extend({
-  // Default render function, which is empty.
-  render: function() {},
-
   constructor: function(properties) {
     this.set(properties);
 
     this.on('refresh', this.refresh);
-    this.on('change', this.render);
+    this.on('change', this.preRender);
+    this.on('touchEvent', this.touchEventHandler);
   },
 
   run: function(parent) {
@@ -36,6 +34,40 @@ Kaya.Sprite = Kaya.Object.extend({
     } else {
       throw new Error('Unable to create DOM');
     }
+  },
+
+  // Default render function, which is empty.
+  render: function() {},
+
+  preRender: function(event, render) {
+    // Clear the canvas.
+    this.context.clearRect(0, 0, this.app.size.width, this.app.size.width);
+    // Save the context drawing center.
+    this.context.save();
+    // Move the drawing center.
+    this.context.translate(this.get('x'), this.get('y'));
+    if (render) {
+      render.call(this);
+    } else {
+      this.render();
+    }
+    this.context.restore();
+  },
+
+  touchEventHandler: function(event, touch) {
+    if (this.isTouched(touch)) {
+      touch['offsetX'] = touch.x - this.get('x');
+      touch['offsetY'] = touch.y - this.get('y');
+      this.trigger('touch', touch);
+      return true;
+    } else {
+      return false;
+    }
+  },
+
+  isTouched: function(touch) {
+    return Math.abs(this.get('x') - touch.x) * 2 < this.get('width')
+      && Math.abs(this.get('y') - touch.y) * 2 < this.get('height');
   },
 
   // Will be called by its parent at fps.

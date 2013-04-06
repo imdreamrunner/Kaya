@@ -9,6 +9,9 @@ var WelcomeStage = Kaya.Stage.extend({
       y: 100,
       color: '#FFFFFF'
     });
+    sprite.on('touch', function(event, touch) {
+      console.log(touch);
+    });
     layer.attach(sprite);
     sprite.runAction(new Kaya.Action.MoveTo(100, 200));
 
@@ -20,7 +23,7 @@ var WelcomeStage = Kaya.Stage.extend({
       color: '#FFFFFF'
     });
     layer.attach(sprite);
-    sprite.enqueueAction(new Kaya.Action.MoveTo(400, 200))
+    sprite.enqueueAction(new Kaya.Action.MoveTo(360, 160))
       .enqueueAction(new Kaya.Action.MoveTo(300, 100));
   }
 });

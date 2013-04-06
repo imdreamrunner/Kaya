@@ -16,6 +16,19 @@ Kaya.Object = Kaya.Class.extend({
     }
   },
 
+  _checkDataType: function(property, value) {
+    switch (this.dataTypes[property] || '') {
+      case 'Integer':
+        return parseInt(value);
+      case 'Float':
+        return parseFloat(value);
+      case 'String' :
+        return String(value);
+      default:
+        return value;
+    }
+  },
+
   // Change the property(s).
   set: function() {
     var changes, silent = false;
@@ -34,6 +47,7 @@ Kaya.Object = Kaya.Class.extend({
     this._properties = this._properties || {};
     this._previous = this._previous || {};
     for (var name in changes) {
+      changes[name] = this._checkDataType(name, changes[name]);
       if (this.get(name) === 'undefined'
         || this.get(name) !== changes[name]) {
         // Add or change a property

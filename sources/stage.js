@@ -3,6 +3,7 @@ Kaya.Stage = Kaya.Object.extend({
 
   constructor: function() {
     this.on('refresh', this.refresh);
+    this.on('touchEvent', this.touchEventHandler);
   },
 
   run: function(app) {
@@ -65,18 +66,16 @@ Kaya.Stage = Kaya.Object.extend({
     this._layers.forEach(callback, this);
   },
 
-  findLayer: function(layerId) {
-    for (var i in this._layers) {
-      if (this._layers[i]._id === layerId) {
-        return this._layers[i];
-      }
-    }
+  refresh: function() {
+    this.eachLayer(function(layer) {
+      layer.trigger('refresh');
+    });
   },
 
-
-  refresh: function() {
-    this._layers.forEach(function(layer) {
-      layer.trigger('refresh');
+  touchEventHandler: function(event, touch){
+    // TODO: stop trigger next layer if event is caught.
+    this.eachLayer(function(layer) {
+      layer.trigger('touchEvent', touch);
     });
   },
 

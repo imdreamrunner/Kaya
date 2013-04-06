@@ -29,7 +29,7 @@ Kaya.App = Kaya.Object.extend({
     this.touchEvent = new Kaya.Interaction.TouchEvent(this);
 
     // Create touch event listener.
-    this.on('touchstart', this.touchHandler);
+    this.on('touchEvent', this.touchEventHandler);
 
     // Create interval.
     this.on('refresh', this.refresh);
@@ -43,8 +43,10 @@ Kaya.App = Kaya.Object.extend({
     }
   },
 
-  touchHandler: function(event, position) {
-    console.log(position);
+  touchEventHandler: function(event, touch) {
+    if (this.currentStage) {
+      this.currentStage.trigger('touchEvent', touch);
+    }
   },
 
   refresh: function() {

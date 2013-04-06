@@ -26,6 +26,7 @@ Kaya.Action = Kaya.Class.extend({
   // Remove itself from sprite when it is finished.
   _finish: function() {
     console.log('action finished');
+    console.log((new Date()).getTime());
     if (this.callback) {
       this.callback.call(this.sprite);
     }

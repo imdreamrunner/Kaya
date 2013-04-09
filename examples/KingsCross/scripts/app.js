@@ -25,6 +25,16 @@ var WelcomeStage = Kaya.Stage.extend({
     layer.attach(sprite2);
     sprite2.enqueueAction(new Kaya.Action.MoveTo(360, 160, 1))
       .enqueueAction(new Kaya.Action.MoveTo(300, 100, 1));
+
+    var falling = new Kaya.Sprite.Rectangular({
+      width: 100,
+      height: 100,
+      x: 600,
+      y: 100,
+      color: '#FFFFFF'
+    });
+    layer.attach(falling);
+    falling.runAction(new Kaya.Action.AcceletateTo(600, 500, 0, 5));
   }
 });
 

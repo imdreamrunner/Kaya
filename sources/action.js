@@ -43,6 +43,9 @@ Kaya.Action.Move = Kaya.Action.extend({
         this.target = options.target;
       }
     }
+    if (options.duration) {
+      this.duration = options.duration;
+    }
   },
 
   // Overwrite the default run method.
@@ -50,33 +53,44 @@ Kaya.Action.Move = Kaya.Action.extend({
     // Remember to call the origin method.
     this._super.apply(this, arguments);
     // Decide the speed by checking it direction.
-    this.speedX = sprite.get('x') < this.target.x ? 1 : -1;
-    this.speedY = sprite.get('y') < this.target.y ? 1 : -1;
+    this.origin = {
+      x: sprite.get('x'),
+      y: sprite.get('y')
+    };
+    this.length = this.duration * sprite.app.fps;
+    this.framesLeft = this.length;
     this.setSchedule(1, this.updater);
+  },
+
+  _speed: function() {
+    var speed = {
+      x: (this.target.x - this.origin.x) / this.length,
+      y: (this.target.y - this.origin.y) / this.length
+    };
+    return speed;
   },
 
   updater: function() {
     var sprite = this.sprite;
-    var finish = 0;
-    if (sprite.get('x') === this.target.x) {
-      finish++;
-    } else {
-      sprite.set('x', sprite.get('x') + this.speedX);
-    }
-    if (sprite.get('y') === this.target.y) {
-      finish++;
-    } else {
-      sprite.set('y', sprite.get('y') + this.speedY);
-    }
-    if (finish === 2) {
+    var speed = this._speed();
+    if (!this.framesLeft) {
+      sprite.set('x', this.target.x);
+      sprite.set('y', this.target.y);
       this._finish();
+      return;
     }
+    sprite.set('x', sprite.get('x') + speed.x);
+    sprite.set('y', sprite.get('y') + speed.y);
+    this.framesLeft--;
   }
 });
 
 Kaya.Action.MoveTo = Kaya.Action.Move.extend({
-  constructor: function(x, y) {
-    var options = {target: {x: x, y: y}};
+  constructor: function(x, y, duration) {
+    var options = {
+      target: {x: x, y: y},
+      duration: duration
+    };
     this._super(options);
   }
 });

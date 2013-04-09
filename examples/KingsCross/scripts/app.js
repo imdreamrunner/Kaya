@@ -13,18 +13,18 @@ var WelcomeStage = Kaya.Stage.extend({
       console.log(touch);
     });
     layer.attach(sprite);
-    sprite.runAction(new Kaya.Action.MoveTo(100, 200));
+    sprite.runAction(new Kaya.Action.MoveTo(100, 200, 2));
 
-    var sprite = new Kaya.Sprite.Rectangular({
+    var sprite2 = new Kaya.Sprite.Rectangular({
       width: 100,
       height: 100,
       x: 300,
       y: 100,
       color: '#FFFFFF'
     });
-    layer.attach(sprite);
-    sprite.enqueueAction(new Kaya.Action.MoveTo(360, 160))
-      .enqueueAction(new Kaya.Action.MoveTo(300, 100));
+    layer.attach(sprite2);
+    sprite2.enqueueAction(new Kaya.Action.MoveTo(360, 160, 1))
+      .enqueueAction(new Kaya.Action.MoveTo(300, 100, 1));
   }
 });
 

@@ -1,4 +1,4 @@
-Kaya HTML5 Game Engin
+Kaya HTML5 Game Engine
 =====================
 
 To be done.

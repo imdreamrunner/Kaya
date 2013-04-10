@@ -7,7 +7,7 @@ Kaya.Object = Kaya.Class.extend({
   get: function(name) {
     if (this._properties) {
       if (name) {
-        return this._properties[name] || undefined;
+        return typeof this._properties[name] === 'undefined' ? undefined : this._properties[name];
       } else {
         return Kaya.Utilities.clone(this._properties);
       }

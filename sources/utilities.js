@@ -60,5 +60,16 @@ Kaya.Utilities = {
       g: parseInt(result[2], 16),
       b: parseInt(result[3], 16)
     } : null;
+  },
+
+  rgbToHex: function(r, g, b) {
+    function componentToHex(c) {
+      if (c > 255) {
+        c = 255;
+      }
+      var hex = c.toString(16);
+      return hex.length == 1 ? "0" + hex : hex;
+    }
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
   }
 };

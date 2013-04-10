@@ -80,10 +80,9 @@ Kaya.Layer = Kaya.Object.extend({
 
   remove: function() {
     if (this.parent) {
-      this.parent.detach(this._id);
+      this.parent.detach(this);
     }
     this.off();
     this.stopListening();
-    console.log('layer is removed.');
   }
 });

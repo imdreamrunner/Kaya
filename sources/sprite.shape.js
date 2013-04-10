@@ -11,7 +11,7 @@ Kaya.Sprite.Rectangular = Kaya.Sprite.extend({
   render: function() {
     this._super();
     var color = Kaya.Utilities.hexToRgb(this.get('color'));
-    var alpha = this.get('alpha') || 1;
+    var alpha = typeof this.get('alpha') === 'undefined'? 1 : this.get('alpha');
     this.context.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + alpha + ')';
     this.context.fillRect(- this.get('width')/2, - this.get('height')/2, this.get('width'), this.get('height'));
   }
@@ -29,7 +29,7 @@ Kaya.Sprite.Circle = Kaya.Sprite.extend({
   render: function() {
     this._super();
     var color = Kaya.Utilities.hexToRgb(this.get('color'));
-    var alpha = this.get('alpha') || 1;
+    var alpha = typeof this.get('alpha') === 'undefined'? 1 : this.get('alpha');
     this.context.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + alpha + ')';
     this.context.beginPath();
     this.context.arc(0, 0, this.get('radius'), 0, Math.PI*2, true);

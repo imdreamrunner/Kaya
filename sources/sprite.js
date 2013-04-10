@@ -7,7 +7,7 @@ Kaya.Sprite = Kaya.Object.extend({
     this.set(properties);
 
     this.on('refresh', this.refresh);
-    this.on('change', this.preRender);
+    this.on('change', this.renderWrapper);
     this.on('touchEvent', this.touchEventHandler);
   },
 
@@ -18,7 +18,7 @@ Kaya.Sprite = Kaya.Object.extend({
     if (this.initialize) {
       this.initialize.call(this);
     }
-    this.render();
+    this.renderWrapper();
   },
 
   createDOM: function() {
@@ -36,10 +36,18 @@ Kaya.Sprite = Kaya.Object.extend({
     }
   },
 
+  removeDOM: function() {
+    console.log('remove dom')
+    if (this.$DOM) {
+      this.$DOM.remove();
+      delete this.$DOM;
+    }
+  },
+
   // Default render function, which is empty.
   render: function() {},
 
-  preRender: function(event, render) {
+  renderWrapper: function(event, render) {
     // Clear the canvas.
     this.context.clearRect(0, 0, this.app.size.width, this.app.size.width);
     // Save the context drawing center.
@@ -125,11 +133,10 @@ Kaya.Sprite = Kaya.Object.extend({
 
   remove: function() {
     if (this.parent) {
-      this.parent.detach(this._id);
+      this.parent.detach(this);
     }
     this.off();
     this.stopListening();
-    console.log('sprite is removed.');
   }
 });
 

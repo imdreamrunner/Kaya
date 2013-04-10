@@ -17,7 +17,7 @@ var MainStage = Kaya.Stage.extend({
         .enqueueAction(new Kaya.Action.FadeOut(1))
         .enqueueAction(new Kaya.Action.Remove());
     }
-    setInterval(CreateShape, 200);
+    setInterval(CreateShape, 150);
   }
 });
 

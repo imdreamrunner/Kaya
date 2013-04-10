@@ -13,7 +13,7 @@ var WelcomeStage = Kaya.Stage.extend({
       console.log(touch);
     });
     layer.attach(sprite);
-    sprite.runAction(new Kaya.Action.MoveTo(100, 200, 2));
+    sprite.runAction(new Kaya.Action.MoveTo(100, 200, 1));
 
     var sprite2 = new Kaya.Sprite.Rectangular({
       width: 100,
@@ -34,7 +34,7 @@ var WelcomeStage = Kaya.Stage.extend({
       color: '#FFFFFF'
     });
     layer.attach(falling);
-    falling.runAction(new Kaya.Action.AcceletateTo(600, 500, 0, 5));
+    falling.runAction(new Kaya.Action.AcceletateBy(200, 500, 0, 10, 100 , -200));
   }
 });
 

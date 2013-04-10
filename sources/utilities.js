@@ -45,4 +45,5 @@ Kaya.Utilities = {
 
     throw new Error("Failed to clone an object.");
   }
-}
+  
+};

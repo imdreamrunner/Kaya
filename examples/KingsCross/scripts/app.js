@@ -26,15 +26,16 @@ var WelcomeStage = Kaya.Stage.extend({
     sprite2.enqueueAction(new Kaya.Action.MoveTo(360, 160, 1))
       .enqueueAction(new Kaya.Action.MoveTo(300, 100, 1));
 
-    var falling = new Kaya.Sprite.Rectangular({
-      width: 100,
-      height: 100,
+    var falling = new Kaya.Sprite.Circle({
+      radius: 50,
       x: 600,
       y: 100,
       color: '#FFFFFF'
     });
     layer.attach(falling);
-    falling.runAction(new Kaya.Action.AcceletateBy(200, 500, 0, 10, 100 , -200));
+    falling.runAction(new Kaya.Action.AcceletateBy(200, 500, 0, 10, 100 , -200))
+      .enqueueAction(new Kaya.Action.FadeOut(1.5))
+      .enqueueAction(new Kaya.Action.FadeIn(1));
   }
 });
 

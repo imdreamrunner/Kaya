@@ -8,11 +8,11 @@ test('load', function () {
 test('.extend()', function () {
   expect(5);
   var Parent = Kaya.Class.extend({
-    constructor: function(value) {
+    constructor: function (value) {
       this.value = value;
     },
     testValue: 2,
-    testMethod: function(value) {
+    testMethod: function (value) {
       if (value) {
         ok(true, 'super method');
       } else {
@@ -25,7 +25,7 @@ test('.extend()', function () {
   ok(parent.value === 1, 'initialize');
   parent.testMethod(false);
   var Son = Parent.extend({
-    testMethod: function() {
+    testMethod: function () {
       this._super(true);
       ok(true, 'son method');
     }

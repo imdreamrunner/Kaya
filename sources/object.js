@@ -17,7 +17,7 @@ Kaya.Object = Kaya.Class.extend({
   },
 
   _checkDataType: function(property, value) {
-    switch (this.dataTypes[property] || '') {
+    switch (this.dataTypes ? this.dataTypes[property] || '' : '') {
       case 'Integer':
         return parseInt(value);
       case 'Float':

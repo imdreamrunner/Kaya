@@ -74,13 +74,12 @@ Kaya.Sprite = Kaya.Object.extend({
   },
 
   isTouched: function(touch) {
-    return Math.abs(this.get('x') - touch.x) * 2 < this.get('width')
-      && Math.abs(this.get('y') - touch.y) * 2 < this.get('height');
+    return false;
   },
 
   // Will be called by its parent at fps.
   refresh: function() {
-    if (this._schedules){
+    if (this._schedules) {
       this._schedules.forEach(function(schedule) {
         schedule.refresh();
       }, this);

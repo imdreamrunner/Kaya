@@ -14,6 +14,11 @@ Kaya.Sprite.Rectangular = Kaya.Sprite.extend({
     var alpha = typeof this.get('alpha') === 'undefined'? 1 : this.get('alpha');
     this.context.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + alpha + ')';
     this.context.fillRect(- this.get('width')/2, - this.get('height')/2, this.get('width'), this.get('height'));
+  },
+
+  isTouched: function(touch) {
+    return Math.abs(this.get('x') - touch.x) * 2 < this.get('width')
+      && Math.abs(this.get('y') - touch.y) * 2 < this.get('height');
   }
 });
 

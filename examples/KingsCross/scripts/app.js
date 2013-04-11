@@ -36,6 +36,15 @@ var WelcomeStage = Kaya.Stage.extend({
     falling.runAction(new Kaya.Action.AcceletateBy(200, 500, 0, 10, 100 , -200))
       .enqueueAction(new Kaya.Action.FadeOut(1.5))
       .enqueueAction(new Kaya.Action.FadeIn(1));
+
+    var text = new Kaya.Sprite.Text({
+      text: 'Hello World',
+      x: 512,
+      y: 100,
+      font: '30px Arial',
+      color: '#FFF'
+    });
+    layer.attach(text);
   }
 });
 

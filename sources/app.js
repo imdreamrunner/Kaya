@@ -15,7 +15,7 @@ Kaya.App = Kaya.Object.extend({
     if (this.$DOM.length === 0) {
       throw new Error('App frame "' + this.frame + '" is not found.');
     }
-    this.fps = this.fps || 60;
+    this.fps = 60;
     this.size = this.size || {};
     this.size.width = this.size.width || 400;
     this.size.height = this.size.height || 300;
@@ -33,10 +33,25 @@ Kaya.App = Kaya.Object.extend({
 
     // Create interval.
     this.on('refresh', this.refresh);
+
+    var countRefresh = 0;
+    var lastRefresh;
     var refresh = function() {
+      requestAnimationFrame(refresh, _this.$DOM[0]);
+      if(!lastRefresh) {
+        lastRefresh = new Date().getTime();
+        return;
+      }
+      countRefresh ++;
+      if (countRefresh === 10) {
+        countRefresh = 0;
+        var delta = (new Date().getTime() - lastRefresh) / 1000;
+        lastRefresh = new Date().getTime();
+        _this.fps = 10 / delta;
+      }
       _this.trigger('refresh');
     };
-    this.interval = setInterval(refresh, parseInt(1000 / this.fps));
+    refresh();
 
     if (this.initialize) {
       this.initialize.call(this);
@@ -50,6 +65,7 @@ Kaya.App = Kaya.Object.extend({
   },
 
   refresh: function() {
+    $('#fps').html(Math.round(this.fps * 10) / 10);
     if (this.currentStage) {
       this.currentStage.trigger('refresh');
     }

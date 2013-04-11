@@ -73,6 +73,11 @@ Kaya.Layer = Kaya.Object.extend({
   },
 
   refresh: function() {
+    if (this._schedules) {
+      this._schedules.forEach(function(schedule) {
+        schedule.refresh();
+      }, this);
+    }
     this.eachChild(function(child) {
       child.trigger('refresh');
     });
@@ -86,3 +91,5 @@ Kaya.Layer = Kaya.Object.extend({
     this.stopListening();
   }
 });
+
+Kaya.Utilities.extend(Kaya.Layer.prototype, ScheduleMethods);

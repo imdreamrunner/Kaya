@@ -7,49 +7,25 @@ Kaya.Sprite = Kaya.Object.extend({
     this.set(properties);
 
     this.on('refresh', this.refresh);
-    this.on('change', this.renderWrapper);
+    // this.on('change', this.renderWrapper);
+    this.on('render', this.renderWrapper);
     this.on('touchEvent', this.touchEventHandler);
   },
 
   run: function(parent) {
     this.parent = parent;
     this.app = parent.app;
-    this.createDOM();
+    this.context = parent.context;
     if (this.initialize) {
       this.initialize.call(this);
     }
     this.renderWrapper();
   },
 
-  createDOM: function() {
-    if (this.parent && this.parent.$DOM) {
-      if (!this.$DOM) {
-        this.$DOM = $('<canvas width="' + this.app.size.width + '" height="' +  this.app.size.height + '">');
-        this.$DOM.css({
-          position: 'absolute'
-        });
-        this.parent.$DOM.append(this.$DOM);
-        this.context = this.$DOM[0].getContext('2d');
-      }
-    } else {
-      throw new Error('Unable to create DOM');
-    }
-  },
-
-  removeDOM: function() {
-    console.log('remove dom')
-    if (this.$DOM) {
-      this.$DOM.remove();
-      delete this.$DOM;
-    }
-  },
-
   // Default render function, which is empty.
   render: function() {},
 
   renderWrapper: function(event, render) {
-    // Clear the canvas.
-    this.context.clearRect(0, 0, this.app.size.width, this.app.size.width);
     // Save the context drawing center.
     this.context.save();
     // Move the drawing center.

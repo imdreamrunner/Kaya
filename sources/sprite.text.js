@@ -15,7 +15,6 @@ Kaya.Sprite.Text = Kaya.Sprite.extend({
     this.context.textAlign = 'center';
     this.context.textBaseline = 'middle';
     this.context.fillText(this.get('text'), 0, 0);
-    console.log('rendered text ' + this.get('text'));
   },
 
   isTouched: function(touch) {

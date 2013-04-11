@@ -18,11 +18,12 @@ Kaya.Layer = Kaya.Object.extend({
   createDOM: function() {
     if (this.parent && this.parent.$DOM) {
       if (!this.$DOM) {
-        this.$DOM = $('<div>');
+        this.$DOM = $('<canvas width="' + this.app.size.width + '" height="' +  this.app.size.height + '">');
         this.$DOM.css({
           position: 'absolute'
         });
         this.parent.$DOM.append(this.$DOM);
+        this.context = this.$DOM[0].getContext('2d');
       }
     } else {
       throw new Error('Unable to create DOM');
@@ -78,9 +79,17 @@ Kaya.Layer = Kaya.Object.extend({
         schedule.refresh();
       }, this);
     }
+
     this.eachChild(function(child) {
       child.trigger('refresh');
     });
+
+    // Clear the canvas.
+    this.context.clearRect(0, 0, this.app.size.width, this.app.size.width);
+    this.eachChild(function(child) {
+      child.trigger('render');
+    });
+
   },
 
   remove: function() {

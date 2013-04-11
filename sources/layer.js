@@ -2,6 +2,7 @@ Kaya.Layer = Kaya.Object.extend({
   _children: [],
 
   constructor: function() {
+    this.changed = false;
     this.on('refresh', this.refresh);
     this.on('touchEvent', this.touchEventHandler);
   },
@@ -10,6 +11,7 @@ Kaya.Layer = Kaya.Object.extend({
     this.parent = parent;
     this.app = parent.app;
     this.createDOM();
+    this.changed = true;
     if (this.initialize) {
       this.initialize.call(this);
     }
@@ -48,6 +50,8 @@ Kaya.Layer = Kaya.Object.extend({
     // To avoid add the same layer to layer array.
     this.detach(child._id);
 
+    this.listenTo(child, 'change', this.change);
+
     child.run(this);
     this._children.push(child);
   },
@@ -55,7 +59,6 @@ Kaya.Layer = Kaya.Object.extend({
   detach: function(child) {
     var index;
     if ((index = this._children.indexOf(child)) > -1) {
-      child.removeDOM();
       delete child.parent;
       this._children.splice(index, 1);
       return true;
@@ -73,23 +76,32 @@ Kaya.Layer = Kaya.Object.extend({
     });
   },
 
+  change: function() {
+    this.changed = true;
+  },
+
   refresh: function() {
+    if (this.changed) {
+      this.changed = false;
+      // Clear the canvas.
+      this.context.clearRect(0, 0, this.app.size.width, this.app.size.width);
+      // render the child
+      this.eachChild(function(child) {
+        child.trigger('render');
+      });
+    }
+
+    // update the schedules
     if (this._schedules) {
       this._schedules.forEach(function(schedule) {
         schedule.refresh();
       }, this);
     }
 
+    // Refresh the children.
     this.eachChild(function(child) {
       child.trigger('refresh');
     });
-
-    // Clear the canvas.
-    this.context.clearRect(0, 0, this.app.size.width, this.app.size.width);
-    this.eachChild(function(child) {
-      child.trigger('render');
-    });
-
   },
 
   remove: function() {

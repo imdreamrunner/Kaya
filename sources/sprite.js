@@ -7,7 +7,6 @@ Kaya.Sprite = Kaya.Object.extend({
     this.set(properties);
 
     this.on('refresh', this.refresh);
-    // this.on('change', this.renderWrapper);
     this.on('render', this.renderWrapper);
     this.on('touchEvent', this.touchEventHandler);
   },

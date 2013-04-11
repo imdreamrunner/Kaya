@@ -11,7 +11,7 @@ Kaya.Schedule = Kaya.Class.extend({
       this.handler.call(this.self, this);
       this._next = this.interval;
     }
-    this._next--;
+    this._next --;
   },
 
   remove: function() {
@@ -20,7 +20,27 @@ Kaya.Schedule = Kaya.Class.extend({
 });
 
 ScheduleMethods = {
-  setSchedule: function(interval, handler) {
+  setSchedule: function(interval, handler, intervalInSecond) {
+    if (typeof interval !== 'number') {
+      // set interval by time.
+      intervalInSecond = handler;
+      handler = interval;
+
+      // get fps
+      var fps;
+      if (this.sprite && this.sprite.app) {
+        // get fps from action.
+        fps = this.sprite.app.fps;
+      } else if (this.app) {
+        // get fps from sprite.
+        fps = this.app.fps;
+      }
+      if (!fps) {
+        throw new Error('Fps is not defined.');
+      }
+
+      interval = intervalInSecond * fps;
+    }
     this._schedules = this._schedules || [];
     this._schedules.push(new Kaya.Schedule(this, interval, handler));
   },

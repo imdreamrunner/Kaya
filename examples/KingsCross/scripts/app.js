@@ -48,7 +48,7 @@ var WelcomeStage = Kaya.Stage.extend({
   }
 });
 
-App = Kaya.App.extend({
+var App = Kaya.App.extend({
   documentObject: '#Game',
   size: {
     width: 1024,

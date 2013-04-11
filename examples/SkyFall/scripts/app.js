@@ -17,11 +17,11 @@ var MainStage = Kaya.Stage.extend({
         .enqueueAction(new Kaya.Action.FadeOut(1))
         .enqueueAction(new Kaya.Action.Remove());
     }
-    layer.setSchedule(5, CreateShape);
+    layer.setSchedule(CreateShape, 0.1);
   }
 });
 
-App = Kaya.App.extend({
+var App = Kaya.App.extend({
   documentObject: '#Game',
   size: {
     width: 1000,

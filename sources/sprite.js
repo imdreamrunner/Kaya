@@ -53,15 +53,15 @@ Kaya.Sprite = Kaya.Object.extend({
   },
 
   // Will be called by its parent at fps.
-  refresh: function() {
+  refresh: function(event, fps) {
     if (this._schedules) {
       this._schedules.forEach(function(schedule) {
-        schedule.refresh();
+        schedule.refresh(fps);
       }, this);
     }
     if (this._actions) {
       this._actions.forEach(function(action) {
-        action.refresh();
+        action.refresh(fps);
       }, this);
     }
   },

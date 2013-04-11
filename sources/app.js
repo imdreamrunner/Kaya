@@ -67,7 +67,7 @@ Kaya.App = Kaya.Object.extend({
   refresh: function() {
     $('#fps').html(Math.round(this.fps * 10) / 10);
     if (this.currentStage) {
-      this.currentStage.trigger('refresh');
+      this.currentStage.trigger('refresh', this.fps);
     }
   },
 

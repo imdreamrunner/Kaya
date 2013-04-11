@@ -80,7 +80,7 @@ Kaya.Layer = Kaya.Object.extend({
     this.changed = true;
   },
 
-  refresh: function() {
+  refresh: function(event, fps) {
     if (this.changed) {
       this.changed = false;
       // Clear the canvas.
@@ -94,13 +94,13 @@ Kaya.Layer = Kaya.Object.extend({
     // update the schedules
     if (this._schedules) {
       this._schedules.forEach(function(schedule) {
-        schedule.refresh();
+        schedule.refresh(fps);
       }, this);
     }
 
     // Refresh the children.
     this.eachChild(function(child) {
-      child.trigger('refresh');
+      child.trigger('refresh', fps);
     });
   },
 

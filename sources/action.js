@@ -15,7 +15,7 @@ Kaya.Action = Kaya.Class.extend({
     this._running = true;
   },
 
-  refresh: function() {
+  refresh: function(fps) {
     if (this._running && this._schedules){
       this._schedules.forEach(function(schedule) {
         schedule.refresh();

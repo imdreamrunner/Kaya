@@ -66,9 +66,9 @@ Kaya.Stage = Kaya.Object.extend({
     this._layers.forEach(callback, this);
   },
 
-  refresh: function() {
+  refresh: function(event, fps) {
     this.eachLayer(function(layer) {
-      layer.trigger('refresh');
+      layer.trigger('refresh', fps);
     });
   },
 

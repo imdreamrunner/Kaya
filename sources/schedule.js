@@ -6,7 +6,7 @@ Kaya.Schedule = Kaya.Class.extend({
     this._next = interval;
   },
 
-  refresh: function() {
+  refresh: function(fps) {
     if (!this._next) {
       this.handler.call(this.self, this);
       this._next = this.interval;

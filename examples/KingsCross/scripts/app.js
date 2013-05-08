@@ -13,7 +13,7 @@ var WelcomeStage = Kaya.Stage.extend({
       console.log(touch);
     });
     layer.attach(sprite);
-    sprite.runAction(new Kaya.Action.MoveTo(100, 200, 1));
+    sprite.runAction(new Kaya.Action.MoveTo(100, 200, 1000));
 
     var sprite2 = new Kaya.Sprite.Rectangular({
       width: 100,
@@ -23,19 +23,19 @@ var WelcomeStage = Kaya.Stage.extend({
       color: '#FFFFFF'
     });
     layer.attach(sprite2);
-    sprite2.enqueueAction(new Kaya.Action.MoveTo(360, 160, 1))
-      .enqueueAction(new Kaya.Action.MoveTo(300, 100, 1));
+    sprite2.enqueueAction(new Kaya.Action.MoveTo(360, 160, 1000))
+      .enqueueAction(new Kaya.Action.MoveTo(300, 100, 1000));
 
     var falling = new Kaya.Sprite.Circle({
       radius: 50,
-      x: 600,
+      x: 700,
       y: 100,
       color: '#FFFFFF'
     });
     layer.attach(falling);
-    falling.runAction(new Kaya.Action.AcceletateBy(200, 500, 0, 10, 100 , -200))
-      .enqueueAction(new Kaya.Action.FadeOut(1.5))
-      .enqueueAction(new Kaya.Action.FadeIn(1));
+    falling.runAction(new Kaya.Action.MoveTo(700, 500, 2500))
+      .enqueueAction(new Kaya.Action.FadeOut(1500))
+      .enqueueAction(new Kaya.Action.FadeIn(1000));
 
     var text = new Kaya.Sprite.Text({
       text: 'Hello World',

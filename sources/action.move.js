@@ -31,17 +31,16 @@ Kaya.Action.Move = Kaya.Action.extend({
         // Target is set.
         _direction.distance = _direction.target - _direction.origin;
       }
-      _direction.spf =_direction.speed ? _direction.speed / sprite.app.fps : 0;
-      _direction.apf = _direction.acceleration ? _direction.acceleration / sprite.app.fps : 0;
 
+      /*
       if (!this.duration) {
         var length = 0;
-        if (_direction.apf) {
-          length = - _direction.spf / _direction.apf
-            + Math.sqrt(4 * Math.pow(_direction.spf / _direction.apf, 2)
-            + 8 * _direction.distance / _direction.apf) / 2;
-        } else if (_direction.spf) {
-          length = _direction.distance / _direction.spf;
+        if (_direction.acceleration) {
+          length = - _direction.speed / _direction.acceleration
+            + Math.sqrt(4 * Math.pow(_direction.speed / _direction.acceleration, 2)
+            + 8 * _direction.distance / _direction.acceleration) / 2;
+        } else if (_direction.speed) {
+          length = _direction.distance / _direction.speed;
         }
         if (isNaN(length)) {
           throw new Error('Unable to calculate action length.');
@@ -49,32 +48,34 @@ Kaya.Action.Move = Kaya.Action.extend({
         _direction.length = parseInt(length);
         this.length = Math.max(this.length || 0, _direction.length);
       }
+      */
     }
     if (this.duration) {
-      this.length = this.duration * sprite.app.fps;
+      this.length = this.duration;
     }
     this.timer = 0;
     this.setSchedule(this.updater, 0);
   },
 
-  updater: function() {
+  updater: function(schedule, delta) {
     var sprite = this.sprite;
     for (var direction in this.directions) {
       var _direction = this.directions[direction];
-      if (_direction.acceleration || _direction.spf) {
+      sprite.set(direction, _direction.origin + _direction.distance / this.length * this.timer);
+      /*
+      if (_direction.acceleration || _direction.speed) {
         if (this.timer <= _direction.length) {
           sprite.set(direction,
-            _direction.origin + _direction.spf * this.timer + _direction.apf * this.timer * this.timer / 2);
+            _direction.origin + _direction.speed * this.timer + _direction.acceleration * this.timer * this.timer / 2);
         }
-      } else {
-        sprite.set(direction, _direction.origin + _direction.distance / this.length * this.timer);
       }
+      */
     }
     if (this.timer >= this.length) {
       this._finish();
       return;
     }
-    this.timer ++;
+    this.timer += delta;
   }
 });
 
@@ -100,6 +101,7 @@ Kaya.Action.MoveBy = Kaya.Action.Move.extend({
   }
 });
 
+/*
 Kaya.Action.AcceletateTo = Kaya.Action.Move.extend({
   constructor: function(x, y, accelerationX, accelerationY, speedX, speedY) {
     var _options = {
@@ -135,3 +137,4 @@ Kaya.Action.AcceletateBy = Kaya.Action.Move.extend({
     this._super(_options);
   }
 });
+*/

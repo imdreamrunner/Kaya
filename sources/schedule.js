@@ -3,20 +3,19 @@ Kaya.Schedule = Kaya.Class.extend({
     this.self = self;
     this.interval = interval;
     this.handler = handler;
-    this._next = interval;
+    this.timer = 0;
   },
 
   refresh: function(delta) {
-    this._next -= delta;
-
-    if (this._next <= 0) {
-      this.handler.call(this.self, this);
+    this.timer += delta;
+    if (this.timer >= this.interval) {
+      this.handler.call(this.self, this, delta);
       if (this.interval) {
-        while (this._next < 0) {
-          this._next += this.interval;
+        while (this.timer >= this.interval) {
+          this.timer -= this.interval;
         }
       } else {
-        this._next = 0;
+        this.timer = 0;
       }
     }
   },

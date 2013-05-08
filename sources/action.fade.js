@@ -8,19 +8,19 @@ Kaya.Action.Fade = Kaya.Action.extend({
   run: function(sprite) {
     this._super.apply(this, arguments);
     this.origin = sprite.get('alpha') || 1;
-    this.length = this.duration * sprite.app.fps;
+    this.length = this.duration;
     this.timer = 0;
     this.setSchedule(this.updater, 0);
   },
 
-  updater: function() {
+  updater: function(schedule, delta) {
     var sprite = this.sprite;
     sprite.set('alpha', this.origin + (this.target - this.origin) * this.timer / this.length);
     if (this.timer >= this.length) {
       this._finish();
       return;
     }
-    this.timer ++;
+    this.timer += delta;
   }
 });
 

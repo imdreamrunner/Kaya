@@ -54,7 +54,7 @@ Kaya.Action.Move = Kaya.Action.extend({
       this.length = this.duration * sprite.app.fps;
     }
     this.timer = 0;
-    this.setSchedule(1, this.updater);
+    this.setSchedule(this.updater, 0);
   },
 
   updater: function() {

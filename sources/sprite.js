@@ -18,7 +18,7 @@ Kaya.Sprite = Kaya.Object.extend({
     if (this.initialize) {
       this.initialize.call(this);
     }
-    this.renderWrapper();
+    this.trigger('render');
   },
 
   // Default render function, which is empty.
@@ -52,16 +52,15 @@ Kaya.Sprite = Kaya.Object.extend({
     return false;
   },
 
-  // Will be called by its parent at fps.
-  refresh: function(event, fps) {
+  refresh: function(event, delta) {
     if (this._schedules) {
       this._schedules.forEach(function(schedule) {
-        schedule.refresh(fps);
+        schedule.refresh(delta);
       }, this);
     }
     if (this._actions) {
       this._actions.forEach(function(action) {
-        action.refresh(fps);
+        action.refresh(delta);
       }, this);
     }
   },

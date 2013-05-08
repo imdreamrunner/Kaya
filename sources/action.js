@@ -15,10 +15,10 @@ Kaya.Action = Kaya.Class.extend({
     this._running = true;
   },
 
-  refresh: function(fps) {
+  refresh: function(delta) {
     if (this._running && this._schedules){
       this._schedules.forEach(function(schedule) {
-        schedule.refresh();
+        schedule.refresh(delta);
       }, this);
     }
   },

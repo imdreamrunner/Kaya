@@ -85,25 +85,6 @@ Kaya.Sprite = Kaya.Object.extend({
     }
   },
 
-  // Add and action to action queue.
-  enqueueAction: function(action) {
-    this._actionQueue = this._actionQueue || [];
-    this._actionQueue.push(action);
-    if (!this._queueing) {
-      this._runQueueAction();
-    }
-    return this;
-  },
-
-  _runQueueAction: function() {
-    if (this._actionQueue && this._actionQueue.length > 0) {
-      this._queueing = true;
-      this.runAction(this._actionQueue.shift(), this._runQueueAction);
-    } else {
-      this._queueing = false;
-    }
-  },
-
   remove: function() {
     if (this.parent) {
       this.parent.detach(this);

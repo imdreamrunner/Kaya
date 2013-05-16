@@ -23,8 +23,9 @@ var WelcomeStage = Kaya.Stage.extend({
       color: '#FFFFFF'
     });
     layer.attach(sprite2);
-    sprite2.enqueueAction(new Kaya.Action.MoveTo(360, 160, 1000))
-      .enqueueAction(new Kaya.Action.MoveTo(300, 100, 1000));
+    var action1 = new Kaya.Action.MoveTo(360, 160, 1000);
+    var action2 = new Kaya.Action.MoveTo(300, 100, 1000);
+    sprite2.runAction(new Kaya.Action.Queue([action1, action2]));
 
     var falling = new Kaya.Sprite.Circle({
       radius: 50,
@@ -34,8 +35,8 @@ var WelcomeStage = Kaya.Stage.extend({
     });
     layer.attach(falling);
     falling.runAction(new Kaya.Action.MoveTo(700, 500, 2500))
-      .enqueueAction(new Kaya.Action.FadeOut(1500))
-      .enqueueAction(new Kaya.Action.FadeIn(1000));
+      .runAction(new Kaya.Action.Queue([new Kaya.Action.FadeOut(1500),
+        new Kaya.Action.FadeIn(1000)]));
 
     var text = new Kaya.Sprite.Text({
       text: 'Hello World',

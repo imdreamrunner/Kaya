@@ -17,11 +17,12 @@ Kaya.Stage = Kaya.Object.extend({
   createDOM: function() {
     if (this.app && this.app.$DOM) {
       if (!this.$DOM) {
-        this.$DOM = $('<div>');
+        this.$DOM = $('<canvas width="' + this.app.size.width + '" height="' +  this.app.size.height + '">');
         this.$DOM.css({
           position: 'absolute'
         });
         this.app.$DOM.append(this.$DOM);
+        this.context = this.$DOM[0].getContext('2d');
       }
     } else {
       throw new Error('Unable to create DOM');
@@ -54,7 +55,6 @@ Kaya.Stage = Kaya.Object.extend({
   detach: function(layer) {
     var index;
     if ((index = this._layers.indexOf(layer)) > -1) {
-      layer.removeDOM();
       delete layer.parent;
       this._layers.splice(index, 1);
       return true;
@@ -69,6 +69,14 @@ Kaya.Stage = Kaya.Object.extend({
   refresh: function(event, delta) {
     this.eachLayer(function(layer) {
       layer.trigger('refresh', delta);
+    });
+
+    // draw on canvas
+    this.context.clearRect(0, 0, this.app.size.width, this.app.size.width);
+    this.eachLayer(function(layer) {
+      var layerImage = new Image();
+      layerImage.src = layer.layerData();
+      this.context.drawImage(layerImage, 0, 0, layerImage.width, layerImage.height);
     });
   },
 

@@ -22,8 +22,7 @@ Kaya.App = Kaya.Object.extend({
     this.$DOM.css({
       'background': this.background || '#000000',
       'width': this.size.width,
-      'height': this.size.height,
-      'text-align': 'left'
+      'height': this.size.height
     });
 
     // Create touch events capture instance.

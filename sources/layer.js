@@ -10,25 +10,35 @@ Kaya.Layer = Kaya.Object.extend({
   run: function(parent){
     this.parent = parent;
     this.app = parent.app;
-    this.createContext();
+    this.createDOM();
     this.changed = true;
     if (this.initialize) {
       this.initialize.call(this);
     }
   },
 
-  createContext: function() {
-    if (!this.canvas) {
-      this.canvas = document.createElement('canvas');
-      this.canvas.id     = "CursorLayer";
-      this.canvas.width  = this.app.size.width;
-      this.canvas.height = this.app.size.height;
+  createDOM: function() {
+    if (this.parent && this.parent.$DOM) {
+      if (!this.$DOM) {
+        this.$DOM = $('<canvas width="' + this.app.size.width + '" height="' +  this.app.size.height + '">');
+        this.$DOM.css({
+          position: 'absolute'
+        });
+        this.parent.$DOM.append(this.$DOM);
+        this.context = this.$DOM[0].getContext('2d');
+      }
+    } else {
+      throw new Error('Unable to create DOM');
     }
-    this.context = this.canvas.getContext('2d');
   },
 
-  layerData: function() {
-    return this.canvas.toDataURL();
+  // Remove the DOM create by itself.
+  // Will be called when it is detached from its parent.
+  removeDOM: function() {
+    if (this.$DOM) {
+      this.$DOM.remove();
+      delete this.$DOM;
+    }
   },
 
   // Add an instance of layer to the stage.
@@ -83,7 +93,6 @@ Kaya.Layer = Kaya.Object.extend({
       child.trigger('refresh', delta);
     });
 
-    // draw on canvas
     if (this.changed) {
       this.changed = false;
       // Clear the canvas.

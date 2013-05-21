@@ -20,12 +20,12 @@ Kaya.Layer = Kaya.Object.extend({
   createDOM: function() {
     if (this.parent && this.parent.$DOM) {
       if (!this.$DOM) {
-        this.$DOM = $('<canvas width="' + this.app.size.width + '" height="' +  this.app.size.height + '">');
-        this.$DOM.css({
-          position: 'absolute'
-        });
-        this.parent.$DOM.append(this.$DOM);
-        this.context = this.$DOM[0].getContext('2d');
+        this.canvas = document.createElement('canvas');
+        this.canvas.width  = this.app.size.width;
+        this.canvas.height = this.app.size.height;
+
+        this.parent.$DOM.append(this.canvas);
+        this.context = this.canvas.getContext('2d');
       }
     } else {
       throw new Error('Unable to create DOM');

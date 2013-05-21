@@ -15,7 +15,6 @@ Kaya.App = Kaya.Object.extend({
     if (this.$DOM.length === 0) {
       throw new Error('App frame "' + this.frame + '" is not found.');
     }
-    this.fps = 60;
     this.size = this.size || {};
     this.size.width = this.size.width || 400;
     this.size.height = this.size.height || 300;

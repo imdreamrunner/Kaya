@@ -38,7 +38,7 @@ Kaya.Stage = Kaya.Object.extend({
 
   // Add an instance of layer to the stage.
   attach: function(layer) {
-    if (typeof layer.stage !== 'undefined') {
+    if (typeof layer.parent !== 'undefined') {
       throw new Error('Unable to attach layer: the layer is already attached to a stage');
     }
 

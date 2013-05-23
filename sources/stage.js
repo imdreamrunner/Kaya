@@ -16,22 +16,23 @@ Kaya.Stage = Kaya.Object.extend({
 
   createDOM: function() {
     if (this.app && this.app.$DOM) {
-      if (!this.$DOM) {
-        this.$DOM = $('<div>');
-        this.$DOM.css({
-          position: 'absolute'
-        });
-        this.app.$DOM.append(this.$DOM);
+      if (!this.canvas) {
+        this.canvas = document.createElement('canvas');
+        this.canvas.width  = this.app.size.width;
+        this.canvas.height = this.app.size.height;
+        this.app.$DOM.append(this.canvas);
       }
+      this.context = this.canvas.getContext('2d');
     } else {
       throw new Error('Unable to create DOM');
     }
   },
 
   removeDOM: function() {
-    if (this.$DOM) {
+    if (this.canvas) {
+      this.canvas.parentNode.removeChild(this.canvas);
       this.$DOM.remove();
-      delete this.$DOM;
+      delete this.canvas;
     }
   },
 
@@ -54,7 +55,6 @@ Kaya.Stage = Kaya.Object.extend({
   detach: function(layer) {
     var index;
     if ((index = this._layers.indexOf(layer)) > -1) {
-      layer.removeDOM();
       delete layer.parent;
       this._layers.splice(index, 1);
       return true;
@@ -67,8 +67,16 @@ Kaya.Stage = Kaya.Object.extend({
   },
 
   refresh: function(event, delta) {
+    // update layers
     this.eachLayer(function(layer) {
       layer.trigger('refresh', delta);
+    });
+
+    var stageContext = this.context;
+    stageContext.clearRect(0, 0, this.app.size.width, this.app.size.width);
+
+    this.eachLayer(function(layer) {
+      stageContext.drawImage(layer.canvas, 0, 0);
     });
   },
 

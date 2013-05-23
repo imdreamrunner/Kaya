@@ -10,35 +10,20 @@ Kaya.Layer = Kaya.Object.extend({
   run: function(parent){
     this.parent = parent;
     this.app = parent.app;
-    this.createDOM();
+    this.createCanvas();
     this.changed = true;
     if (this.initialize) {
       this.initialize.call(this);
     }
   },
 
-  createDOM: function() {
-    if (this.parent && this.parent.$DOM) {
-      if (!this.$DOM) {
-        this.canvas = document.createElement('canvas');
-        this.canvas.width  = this.app.size.width;
-        this.canvas.height = this.app.size.height;
-
-        this.parent.$DOM.append(this.canvas);
-        this.context = this.canvas.getContext('2d');
-      }
-    } else {
-      throw new Error('Unable to create DOM');
+  createCanvas: function() {
+    if (!this.canvas) {
+      this.canvas = document.createElement('canvas');
+      this.canvas.width  = this.app.size.width;
+      this.canvas.height = this.app.size.height;
     }
-  },
-
-  // Remove the DOM create by itself.
-  // Will be called when it is detached from its parent.
-  removeDOM: function() {
-    if (this.$DOM) {
-      this.$DOM.remove();
-      delete this.$DOM;
-    }
+    this.context = this.canvas.getContext('2d');
   },
 
   // Add an instance of layer to the stage.

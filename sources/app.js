@@ -16,8 +16,8 @@ Kaya.App = Kaya.Object.extend({
     this.size.width = this.size.width || 400;
     this.size.height = this.size.height || 300;
     this.DOM.style.background = this.background || '#000000';
-    this.DOM.style.width = this.size.width;
-    this.DOM.style.height = this.size.height;
+    this.DOM.style.width = this.size.width + 'px';
+    this.DOM.style.height = this.size.height + 'px';
 
     // Create touch events capture instance.
     this.touchEvent = new Kaya.Interaction.TouchEvent(this);
@@ -27,6 +27,14 @@ Kaya.App = Kaya.Object.extend({
 
     // Create interval.
     this.on('refresh', this.refresh);
+
+    // Browsers support
+    if (mozRequestAnimationFrame) {
+      window.requestAnimationFrame = mozRequestAnimationFrame;
+    }
+    if (webkitRequestAnimationFrame) {
+      window.requestAnimationFrame = webkitRequestAnimationFrame;
+    }
 
     var lastRefresh;
     var refresh = function() {

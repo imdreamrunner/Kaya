@@ -5,24 +5,19 @@
 Kaya.App = Kaya.Object.extend({
   constructor: function() {
     var that = this;
-    if (!$) {
-      throw new Error('jQuery is not loaded');
-    }
     if (!this.documentObject) {
       throw new Error('No app frame is specified.');
     }
-    this.$DOM = $(this.documentObject);
-    if (this.$DOM.length === 0) {
-      throw new Error('App frame "' + this.frame + '" is not found.');
+    this.DOM = document.querySelector(this.documentObject);
+    if (this.DOM === null) {
+      throw new Error('App document object is not found.');
     }
     this.size = this.size || {};
     this.size.width = this.size.width || 400;
     this.size.height = this.size.height || 300;
-    this.$DOM.css({
-      'background': this.background || '#000000',
-      'width': this.size.width,
-      'height': this.size.height
-    });
+    this.DOM.style.background = this.background || '#000000';
+    this.DOM.style.width = this.size.width;
+    this.DOM.style.height = this.size.height;
 
     // Create touch events capture instance.
     this.touchEvent = new Kaya.Interaction.TouchEvent(this);
@@ -35,7 +30,7 @@ Kaya.App = Kaya.Object.extend({
 
     var lastRefresh;
     var refresh = function() {
-      requestAnimationFrame(refresh, that.$DOM[0]);
+      requestAnimationFrame(refresh, that.DOM);
       if(!lastRefresh) {
         lastRefresh = new Date().getTime();
         return;
@@ -59,7 +54,7 @@ Kaya.App = Kaya.Object.extend({
   },
 
   refresh: function(event, delta) {
-    $('#fps').html(Math.round(10000 / delta) / 10);
+    document.querySelector('#fps').innerHTML = Math.round(10000 / delta) / 10;
     if (this.currentStage) {
       this.currentStage.trigger('refresh', delta);
     }

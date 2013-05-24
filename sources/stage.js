@@ -15,12 +15,12 @@ Kaya.Stage = Kaya.Object.extend({
   },
 
   createDOM: function() {
-    if (this.app && this.app.$DOM) {
+    if (this.app && this.app.DOM) {
       if (!this.canvas) {
         this.canvas = document.createElement('canvas');
         this.canvas.width  = this.app.size.width;
         this.canvas.height = this.app.size.height;
-        this.app.$DOM.append(this.canvas);
+        this.app.DOM.appendChild(this.canvas);
       }
       this.context = this.canvas.getContext('2d');
     } else {
@@ -31,7 +31,6 @@ Kaya.Stage = Kaya.Object.extend({
   removeDOM: function() {
     if (this.canvas) {
       this.canvas.parentNode.removeChild(this.canvas);
-      this.$DOM.remove();
       delete this.canvas;
     }
   },

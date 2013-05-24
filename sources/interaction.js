@@ -2,26 +2,23 @@ Kaya.Interaction = Kaya.Class.extend();
 
 Kaya.Interaction.TouchEvent = Kaya.Class.extend({
   constructor: function(app) {
-    var _this = this;
+    var that = this;
 
     this.app = app;
 
     // Create event capture division.
-    this.$touchObject = $('<div>');
-    this.$touchObject.css({
-      position: 'absolute',
-      width: app.size.width,
-      height: app.size.height,
-      zIndex: 1000
-    });
-    this.app.$DOM.prepend(this.$touchObject);
+    this.touchObject = document.createElement('div');
+    this.touchObject.style.position = 'absolute';
+    this.touchObject.style.width = app.size.width + 'px';
+    this.touchObject.style.height = app.size.height + 'px';
+    this.touchObject.style.zIndex = 1000;
+    this.app.DOM.insertBefore(this.touchObject, this.app.DOM.childNodes[0]);
 
-    this.$touchObject.on('mousedown', function(e) {
-      _this.mouseDown.call(_this, e);
+    this.touchObject.addEventListener('mousedown', function(e) {
+      that.mouseDown.call(that, e);
     });
-
-    this.$touchObject[0].addEventListener('touchstart', function(e) {
-      _this.touchHandler.call(this, e);
+    this.touchObject.addEventListener('touchstart', function(e) {
+      that.touchHandler.call(this, e);
     });
   },
 

@@ -29,10 +29,10 @@ Kaya.App = Kaya.Object.extend({
     this.on('refresh', this.refresh);
 
     // Browsers support
-    if (mozRequestAnimationFrame) {
+    if (window.mozRequestAnimationFrame) {
       window.requestAnimationFrame = mozRequestAnimationFrame;
     }
-    if (webkitRequestAnimationFrame) {
+    if (window.webkitRequestAnimationFrame) {
       window.requestAnimationFrame = webkitRequestAnimationFrame;
     }
 

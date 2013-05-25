@@ -58,31 +58,20 @@ Kaya.Sprite = Kaya.Object.extend({
         schedule.refresh(delta);
       }, this);
     }
-    if (this._actions) {
-      this._actions.forEach(function(action) {
-        action.refresh(delta);
-      }, this);
+    if (this._action) {
+      this._action.refresh(delta);
     }
   },
 
-  // Run an action immediately.
-  // Multiple actions can be run at the same time.
   runAction: function(action, callback) {
-    this._actions = this._actions || [];
-    this._actions.push(action);
+    action.direct = true;
+    this._action = action;
     callback ? action.run(this, callback) : action.run(this);
     return this;
   },
 
-  // Remove an action from action list.
-  // Will be call by Action when it finished.
   finishAction: function(action) {
-    var index = this._actions.indexOf(action);
-    if (index > -1) {
-      this._actions.splice(index, 1);
-    } else {
-      throw new Error('Unable to remove finished action.');
-    }
+    delete this._action;
   },
 
   remove: function() {

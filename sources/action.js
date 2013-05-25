@@ -29,7 +29,7 @@ Kaya.Action = Kaya.Class.extend({
       this.callback.call(this.sprite);
     }
     this.removeSchedule();
-    if (!this.indirect) {
+    if (this.direct) {
       this.sprite.finishAction(this);
     }
   }

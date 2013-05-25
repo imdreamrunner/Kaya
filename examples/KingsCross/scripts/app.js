@@ -34,9 +34,12 @@ var WelcomeStage = Kaya.Stage.extend({
       color: '#FFFFFF'
     });
     layer.attach(falling);
-    falling.runAction(new Kaya.Action.MoveTo(700, 500, 2500))
-      .runAction(new Kaya.Action.Queue([new Kaya.Action.FadeOut(1500),
-        new Kaya.Action.FadeIn(1000)]));
+    falling.runAction(
+      new Kaya.Action.Group([
+        new Kaya.Action.MoveTo(700, 500, 2500),
+        new Kaya.Action.Queue([new Kaya.Action.FadeOut(1500),
+                               new Kaya.Action.FadeIn(1000)])
+      ]));
 
     var text = new Kaya.Sprite.Text({
       text: 'Hello World',

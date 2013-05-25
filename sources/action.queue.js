@@ -13,7 +13,6 @@ Kaya.Action.Queue = Kaya.Action.extend({
   _runAction: function() {
     if (this._actionQueue.length > 0) {
       this._currentAction = this._actionQueue.shift();
-      this._currentAction.indirect = true;
       this._currentAction.run(this.sprite, this._runAction.bind(this));
     } else {
       this._finish();

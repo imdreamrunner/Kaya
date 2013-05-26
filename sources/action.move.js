@@ -55,6 +55,7 @@ Kaya.Action.Move = Kaya.Action.Timing.extend({
       sprite.set('x', this.directions.x.target);
       sprite.set('y', this.directions.y.target);
       this._finish();
+      return;
     }
     this.update();
   }

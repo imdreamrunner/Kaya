@@ -7,7 +7,6 @@ Kaya.Action.Queue = Kaya.Action.extend({
   run: function(sprite) {
     this._super.apply(this, arguments);
     this._runAction();
-    this.setSchedule(this.updater, 0);
   },
 
   _runAction: function() {
@@ -19,7 +18,8 @@ Kaya.Action.Queue = Kaya.Action.extend({
     }
   },
 
-  updater: function(schedule, delta) {
+  refresh: function(delta) {
+    this._super.apply(this, arguments);
     this._currentAction.refresh(delta);
   }
 });

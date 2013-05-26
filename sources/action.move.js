@@ -1,4 +1,4 @@
-Kaya.Action.Move = Kaya.Action.extend({
+Kaya.Action.Move = Kaya.Action.Timing.extend({
   constructor: function(options) {
     this._super(options);
 
@@ -16,7 +16,6 @@ Kaya.Action.Move = Kaya.Action.extend({
 
   // Overwrite the default run method.
   run: function(sprite){
-    // Remember to call the origin method.
     this._super.apply(this, arguments);
 
     for (var direction in this.directions) {
@@ -35,23 +34,29 @@ Kaya.Action.Move = Kaya.Action.extend({
     if (this.duration) {
       this.length = this.duration;
     }
-    this.timer = 0;
-    this.setSchedule(this.updater, 0);
+    // this.setSchedule(this.updater, 0);
+    this.update();
   },
 
-  updater: function(schedule, delta) {
+  update: function() {
+    var sprite = this.sprite;
+    for (var direction in this.directions) {
+      if (this.directions.hasOwnProperty(direction)) {
+        var _direction = this.directions[direction];
+        sprite.set(direction, _direction.origin + _direction.distance / this.length * this.timer);
+      }
+    }
+  },
+
+  refresh: function(delta) {
+    this._super.apply(this, arguments);
     var sprite = this.sprite;
     if (this.timer >= this.length) {
       sprite.set('x', this.directions.x.target);
       sprite.set('y', this.directions.y.target);
       this._finish();
-      return;
     }
-    for (var direction in this.directions) {
-      var _direction = this.directions[direction];
-      sprite.set(direction, _direction.origin + _direction.distance / this.length * this.timer);
-    }
-    this.timer += delta;
+    this.update();
   }
 });
 

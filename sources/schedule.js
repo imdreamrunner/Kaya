@@ -41,7 +41,9 @@ ScheduleMethods = {
       }
     } else {
       // Remove all schedules.
-      this._schedules.length = 0;
+      if (this._schedules) {
+        this._schedules.length = 0;
+      }
     }
   }
 };

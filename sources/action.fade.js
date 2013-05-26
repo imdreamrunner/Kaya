@@ -1,4 +1,4 @@
-Kaya.Action.Fade = Kaya.Action.extend({
+Kaya.Action.Fade = Kaya.Action.Timing.extend({
   constructor: function(options) {
     this._super(options);
     this.target = options.target;
@@ -9,18 +9,21 @@ Kaya.Action.Fade = Kaya.Action.extend({
     this._super.apply(this, arguments);
     this.origin = sprite.get('alpha') || 1;
     this.length = this.duration;
-    this.timer = 0;
-    this.setSchedule(this.updater, 0);
+    this.update();
   },
 
-  updater: function(schedule, delta) {
+  refresh: function(delta) {
+    this._super.apply(this, arguments);
+    this.update();
+  },
+
+  update: function() {
     var sprite = this.sprite;
     sprite.set('alpha', this.origin + (this.target - this.origin) * this.timer / this.length);
     if (this.timer >= this.length) {
       this._finish();
       return;
     }
-    this.timer += delta;
   }
 });
 

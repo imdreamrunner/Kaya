@@ -11,8 +11,15 @@ Kaya.Interaction.TouchEvent = Kaya.Class.extend({
     this.touchObject.style.position = 'absolute';
     this.touchObject.style.width = app.size.width + 'px';
     this.touchObject.style.height = app.size.height + 'px';
+    this.touchObject.style.backgroundColor = '#000';
+    this.touchObject.style.opacity = 0;
     this.touchObject.style.zIndex = 1000;
-    this.app.DOM.insertBefore(this.touchObject, this.app.DOM.childNodes[0]);
+
+    if (this.app.DOM.childNodes.length) {
+      this.app.DOM.insertBefore(this.touchObject, this.app.DOM.childNodes[0]);
+    } else {
+      this.app.DOM.appendChild(this.touchObject);
+    }
 
     this.touchObject.addEventListener('mousedown', function(e) {
       that.mouseDown.call(that, e);

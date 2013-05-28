@@ -47,12 +47,14 @@ Kaya.Object = Kaya.Class.extend({
     this._properties = this._properties || {};
     this._previous = this._previous || {};
     for (var name in changes) {
-      changes[name] = this._checkDataType(name, changes[name]);
-      if (this.get(name) === 'undefined'
-        || this.get(name) !== changes[name]) {
-        // Add or change a property
-        this._previous[name] = this._properties[name];
-        this._properties[name] = changes[name];
+      if (changes.hasOwnProperty(name)) {
+        changes[name] = this._checkDataType(name, changes[name]);
+        if (this.get(name) === 'undefined'
+          || this.get(name) !== changes[name]) {
+          // Add or change a property
+          this._previous[name] = this._properties[name];
+          this._properties[name] = changes[name];
+        }
       }
     }
     if (!silent) {
@@ -64,7 +66,7 @@ Kaya.Object = Kaya.Class.extend({
 
   // Delete a property.
   unset: function(name, silent) {
-    if (this._properties && this._properties[name]) {
+    if (this._properties && this._properties.hasOwnProperty(name)) {
       this._previous[name] = this._properties[name];
       delete this._properties[name];
       if (!silent) {

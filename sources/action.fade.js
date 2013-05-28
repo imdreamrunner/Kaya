@@ -14,16 +14,17 @@ Kaya.Action.Fade = Kaya.Action.Timing.extend({
 
   refresh: function(delta) {
     this._super.apply(this, arguments);
+    if (this.timer >= this.length) {
+      this.sprite.set('alpha', this.target);
+      this._finish();
+      return;
+    }
     this.update();
   },
 
   update: function() {
     var sprite = this.sprite;
     sprite.set('alpha', this.origin + (this.target - this.origin) * this.timer / this.length);
-    if (this.timer >= this.length) {
-      this._finish();
-      return;
-    }
   }
 });
 

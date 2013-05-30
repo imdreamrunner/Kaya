@@ -25,7 +25,6 @@ Kaya.Action.Ease = Kaya.Action.Timing.extend({
       return;
     }
     this._action.timer = parseInt(this._action.length * this.bezierAt(this.timer / this.length));
-    console.log('ease refresh ' + this.timer / this.length + ' bezier ' + this.bezierAt(this.timer / this.length));
     this._action.refresh(0);
   }
 });

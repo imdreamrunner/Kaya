@@ -98,6 +98,8 @@ Kaya.Utilities = {
       var x = t, t0, t1, t2, x2, d2, i;
 
       // First try a few iterations of Newton's method -- normally very fast.
+      // Sometimes bugs appear when using this method, need to be fixed.
+      /*
       for (t2 = x, i = 0; i < 8; i++){
         x2 = curveX(t2) - x;
         if (Math.abs(x2) < epsilon) return curveY(t2);
@@ -105,6 +107,7 @@ Kaya.Utilities = {
         if (Math.abs(d2) < 1e-6) break;
         t2 = t2 - x2 / d2;
       }
+      */
 
       t0 = 0; t1 = 1; t2 = x;
 
@@ -121,7 +124,6 @@ Kaya.Utilities = {
       }
 
       // Failure
-      console.log('Failure!');
       return curveY(t2);
 
     };

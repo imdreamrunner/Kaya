@@ -27,7 +27,7 @@ var WelcomeStage = Kaya.Stage.extend({
     layer.attach(sprite2);
     var action1 = new Kaya.Action.MoveTo(360, 160, 1000);
     var action2 = new Kaya.Action.MoveTo(300, 100, 1000);
-    sprite2.runAction(new Kaya.Action.Queue([action1, action2]));
+    sprite2.runAction(new Kaya.Action.Repeat(new Kaya.Action.Queue([action1, action2]), 2));
 
     var falling = new Kaya.Sprite.Circle({
       radius: 50,

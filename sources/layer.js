@@ -45,6 +45,7 @@ Kaya.Layer = Kaya.Object.extend({
     var index;
     if ((index = this._children.indexOf(child)) > -1) {
       delete child.parent;
+      this.stopListening(child);
       this._children.splice(index, 1);
       return true;
     }

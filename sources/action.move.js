@@ -15,7 +15,7 @@ Kaya.Action.Move = Kaya.Action.Timing.extend({
   },
 
   // Overwrite the default run method.
-  run: function(sprite){
+  run: function(sprite) {
     this._super.apply(this, arguments);
 
     for (var direction in this.directions) {

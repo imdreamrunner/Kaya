@@ -1,11 +1,12 @@
 Kaya.Action.Queue = Kaya.Action.extend({
   constructor: function(actions) {
     this._super.apply(this, arguments);
-    this._actionQueue = actions;
+    this._actions = actions;
   },
 
   run: function(sprite) {
     this._super.apply(this, arguments);
+    this._actionQueue = Kaya.Utilities.clone(this._actions);
     this._runAction();
   },
 

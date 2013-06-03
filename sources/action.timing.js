@@ -4,8 +4,12 @@ Kaya.Action.Timing = Kaya.Action.extend({
     this.timer = 0;
   },
 
-  refresh: function(delta) {
+  refresh: function(delta, absolute) {
     this._super.apply(this, arguments);
-    this.timer += delta;
+    if (absolute) {
+      this.timer = absolute
+    } else {
+      this.timer += delta;
+    }
   }
 });

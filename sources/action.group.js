@@ -28,10 +28,10 @@ Kaya.Action.Group = Kaya.Action.extend({
     }
   },
 
-  refresh: function(delta) {
+  refresh: function(delta, absolute) {
     this._super.apply(this, arguments);
     this._actionGroup.forEach(function(action) {
-      action.refresh(delta);
+      action.refresh(delta, absolute);
     });
   }
 });

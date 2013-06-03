@@ -9,13 +9,20 @@ var MainStage = Kaya.Stage.extend({
         x: Math.random() * 1000,
         y: Math.random() * 100,
         color: '#7cb1d3',
-        alpha: 0.2
+        alpha: 0.1
       });
       layer.attach(falling);
-      falling.runAction(new Kaya.Action.AcceletateBy(0, 700, 0, 10))
-        .enqueueAction(new Kaya.Action.FadeIn(1))
-        .enqueueAction(new Kaya.Action.FadeOut(1))
-        .enqueueAction(new Kaya.Action.Remove());
+      var queue = new Kaya.Action.Queue([
+        new Kaya.Action.FadeIn(1000),
+        new Kaya.Action.FadeOut(1000),
+        new Kaya.Action.Remove()
+      ]);
+      var group = new Kaya.Action.Group([
+        queue,
+        new Kaya.Action.MoveBy(0, 700, 1500)
+      ]);
+      var ease = new Kaya.Action.EaseIn(group, 1500);
+      falling.runAction(ease);
     }
     layer.setSchedule(CreateShape, 100);
   }

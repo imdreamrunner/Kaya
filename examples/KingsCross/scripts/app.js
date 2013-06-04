@@ -47,7 +47,8 @@ var WelcomeStage = Kaya.Stage.extend({
       text: 'Hello World',
       x: 512,
       y: 100,
-      font: '30px Arial',
+      font: 'Arial',
+      size: 30,
       color: '#FFF'
     });
     layer.attach(text);

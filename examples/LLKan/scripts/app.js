@@ -23,6 +23,7 @@ var App = Kaya.App.extend({
     width: 720,
     height: 540
   },
+  resources: Resources,
   initialize: function() {
     this.runStage(new WelcomeStage());
   }

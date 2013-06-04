@@ -50,6 +50,15 @@ Kaya.App = Kaya.Object.extend({
     };
     refresh();
 
+    if (this.resources) {
+      this.resourcesList = this.resources;
+      this.resources = new Kaya.Resources(this, this.resourcesList);
+    } else {
+      this.run();
+    }
+  },
+
+  run: function() {
     if (this.initialize) {
       this.initialize.call(this);
     }

@@ -1,7 +1,7 @@
 Kaya.Stage = Kaya.Object.extend({
-  _layers: [],
-
   constructor: function() {
+    this._layers = [];
+
     this.on('refresh', this.refresh);
     this.on('touchEvent', this.touchEventHandler);
   },

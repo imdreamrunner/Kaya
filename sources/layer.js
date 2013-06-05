@@ -1,7 +1,6 @@
 Kaya.Layer = Kaya.Object.extend({
-  _children: [],
-
   constructor: function() {
+    this._children = [];
     this.changed = false;
     this.on('refresh', this.refresh);
     this.on('touchEvent', this.touchEventHandler);

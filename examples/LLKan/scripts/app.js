@@ -1,5 +1,6 @@
 var WelcomeStage = Kaya.Stage.extend({
   initialize: function() {
+    console.log('i am initialized');
     var layer = new Kaya.Layer();
     this.attach(layer);
     var text = new Kaya.Sprite.Text({
@@ -19,7 +20,7 @@ var WelcomeStage = Kaya.Stage.extend({
       file: 'images/buttonPlay.png'
     });
     playButton.on('touch', function(event, touch) {
-      console.log(touch);
+      app.runStage(new GameStage);
     });
     layer.attach(playButton);
   }

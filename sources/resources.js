@@ -3,11 +3,11 @@ Kaya.Resources = Kaya.Class.extend({
     this.app = app;
 
     var images = resources.images;
-    this.numberOfImages = images.length;
     this.imagesToLoad = images.length;
+    this._images = {};
     for (var i in images) {
       if (images.hasOwnProperty(i)) {
-        this.loadImage(images[i], this.imageLoaded.bind(this));
+        this._images[images[i]] = this.loadImage(images[i], this.imageLoaded.bind(this));
       }
     }
   },
@@ -16,6 +16,7 @@ Kaya.Resources = Kaya.Class.extend({
     var image = new Image();
     image.onload = callback;
     image.src = file;
+    return image;
   },
 
   imageLoaded: function() {
@@ -24,5 +25,9 @@ Kaya.Resources = Kaya.Class.extend({
       console.log('All images are loaded.');
       this.app.run();
     }
+  },
+
+  images: function(file) {
+    return this._images[file];
   }
 });

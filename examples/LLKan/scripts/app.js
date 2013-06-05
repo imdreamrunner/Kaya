@@ -10,10 +10,18 @@ var WelcomeStage = Kaya.Stage.extend({
       size: 30,
       color: '#FFF'
     });
-    text.on('touch', function(event, touch) {
+    layer.attach(text);
+    var playButton = new Kaya.Sprite.Image({
+      x: 360,
+      y: 400,
+      width: 160,
+      height: 40,
+      file: 'images/buttonPlay.png'
+    });
+    playButton.on('touch', function(event, touch) {
       console.log(touch);
     });
-    layer.attach(text);
+    layer.attach(playButton);
   }
 });
 

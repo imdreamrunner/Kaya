@@ -17,8 +17,8 @@ Kaya.Sprite.Rectangular = Kaya.Sprite.extend({
   },
 
   isTouched: function(touch) {
-    return Math.abs(this.get('x') - touch.x) * 2 < this.get('width')
-      && Math.abs(this.get('y') - touch.y) * 2 < this.get('height');
+    return Math.abs(this.get('x') - touch.x) * 2 <= this.get('width')
+      && Math.abs(this.get('y') - touch.y) * 2 <= this.get('height');
   }
 });
 

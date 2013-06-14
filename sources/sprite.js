@@ -11,10 +11,10 @@ Kaya.Sprite = Kaya.Object.extend({
     this.on('touchEvent', this.touchEventHandler);
   },
 
-  run: function(parent) {
-    this.parent = parent;
-    this.app = parent.app;
-    this.context = parent.context;
+  run: function(layer) {
+    this.layer = layer;
+    this.app = layer.app;
+    this.context = layer.context;
     if (this.initialize) {
       this.initialize.call(this);
     }
@@ -75,8 +75,8 @@ Kaya.Sprite = Kaya.Object.extend({
   },
 
   remove: function() {
-    if (this.parent) {
-      this.parent.detach(this);
+    if (this.layer) {
+      this.layer.detach(this);
     }
     this.off();
     this.stopListening();

@@ -44,6 +44,8 @@ var Brick = Kaya.Sprite.Rectangular.extend({
   },
 
   select: function() {
+    var selectedList = this.layer.where({selected: true});
+    console.log(selectedList);
     this.set('selected', true);
   },
 
@@ -75,7 +77,6 @@ var GameStage = Kaya.Stage.extend({
         type: type
       });
       brick.on('touch', function(){
-        console.log(this.get('left'), ' x ', top);
         this.select();
       });
       return brick;
@@ -93,11 +94,9 @@ var GameStage = Kaya.Stage.extend({
     brickTypes.sort(function() {
       return Math.round(Math.random());
     });
-    var bricks = [];
     for (var top = 0; top < 10; top++) {
       for (var left = 0; left < 14; left++) {
-        bricks[top*14 + left] = createBrick(brickTypes[top*14 + left], left, top);
-        brickLayer.attach(bricks[top*14 + left]);
+        brickLayer.attach(createBrick(brickTypes[top*14 + left], left, top));
       }
     }
   }

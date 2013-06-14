@@ -55,6 +55,23 @@ Kaya.Layer = Kaya.Object.extend({
     this._children.forEach(callback, this);
   },
 
+  filter: function(iterator) {
+    return this._children.filter(iterator);
+  },
+
+  where: function(properties) {
+    return this.filter(function(child) {
+      for (var name in properties) {
+        if (properties.hasOwnProperty(name)) {
+          if (child.get(name) !== properties[name]) {
+            return false;
+          }
+        }
+      }
+      return true;
+    });
+  },
+
   touchEventHandler: function(event, touch) {
     this.eachChild(function(child) {
       child.trigger('touchEvent', touch);

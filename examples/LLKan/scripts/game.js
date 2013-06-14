@@ -55,8 +55,16 @@ var Brick = Kaya.Sprite.Rectangular.extend({
     }
     var selectedList = this.layer.where({selected: true});
     if (selectedList.length === 1) {
-      this.explode();
-      selectedList[0].explode();
+      var target = selectedList[0];
+      if (target.get('type') === this.get('type')) {
+        // matched
+        this.explode();
+        target.explode();
+      } else {
+        // colors unmatched
+        this.set('selected', false);
+        target.set('selected', false);
+      }
     } else {
       this.set('selected', true);
     }

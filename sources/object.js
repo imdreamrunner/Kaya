@@ -30,9 +30,10 @@ Kaya.Object = Kaya.Class.extend({
   },
 
   // Change the property(s).
+  // set(properties, isSilent) or set(property, value)
   set: function() {
     var changes, silent = false;
-    if (arguments[0] && typeof arguments[0] === 'string' && arguments[1]) {
+    if (typeof arguments[0] === 'string' && typeof arguments[1] !== 'undefined') {
       changes = {};
       changes[arguments[0]] = arguments[1];
       if (arguments[2]) {

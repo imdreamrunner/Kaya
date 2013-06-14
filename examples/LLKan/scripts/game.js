@@ -31,6 +31,8 @@ var Brick = Kaya.Sprite.Rectangular.extend({
     if (this.hasChanged('selected')) {
       if (this.get('selected')) {
         this.set('alpha', 0.8);
+      } else {
+        this.set('alpha', 1);
       }
     }
   },
@@ -44,15 +46,29 @@ var Brick = Kaya.Sprite.Rectangular.extend({
   },
 
   select: function() {
+    if (this.get('exploded')) {
+      return;
+    }
+    if (this.get('selected')) {
+      this.set('selected', false);
+      return;
+    }
     var selectedList = this.layer.where({selected: true});
-    console.log(selectedList);
-    this.set('selected', true);
+    if (selectedList.length === 1) {
+      this.explode();
+      selectedList[0].explode();
+    } else {
+      this.set('selected', true);
+    }
   },
 
   explode: function() {
     if (!this.get('exploded')) {
       this.runAction(new Kaya.Action.FadeTo(0, 500));
-      this.set('explode', true);
+      this.set({
+        'exploded': true,
+        'selected': false
+      });
     }
   }
 });

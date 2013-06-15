@@ -32,8 +32,8 @@ Kaya.Interaction.TouchEvent = Kaya.Class.extend({
   mouseDown: function(e) {
     var touch = {
       status: 'start',
-      x: e.layerX,
-      y: e.layerY
+      x: e.layerX || e.offsetX,
+      y: e.layerY || e.offsetY
     };
     this.app.trigger('touchEvent',touch);
   },

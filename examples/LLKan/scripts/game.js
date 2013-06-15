@@ -1,9 +1,126 @@
+var WIDTH = 14;
+var HEIGHT = 10;
+
 var BrickColor = [
   '#F00',
   '#0F0',
   '#00F',
   '#FFF'
 ];
+
+function isMatch(a, b) {
+  if (a.get('type') !== b.get('type')) {
+    return false;
+  }
+  var layer = a.layer;
+  function hasBrick(x, y) {
+    var bricks = layer.where({
+      left: x,
+      top: y,
+      exploded: false
+    });
+    return !!bricks.length;
+  }
+  var ax = a.get('left');
+  var ay = a.get('top');
+  var bx = b.get('left');
+  var by = b.get('top');
+  var t;
+  if (ax > bx) {
+    t = bx;
+    bx = ax;
+    ax = t;
+    t = by;
+    by = ay;
+    ay = t;
+  }
+
+  function findMax(startX, startY, direction) {
+    var vertical = direction === 0 || direction === 2;
+    var step = (direction === 1 || direction === 2) ? 1 : -1;
+    var target = vertical ? startY : startX;
+    while (true) {
+      target += step;
+      if (target < 0) {
+        return -1;
+      }
+      if (vertical) {
+        if (target > (HEIGHT - 1)) {
+          return HEIGHT
+        }
+        if (hasBrick(startX, target)) {
+          return target - step;
+        }
+      } else {
+        if (target > (WIDTH - 1)) {
+          return WIDTH;
+        }
+        if (hasBrick(target, startY)) {
+          return target - step;
+        }
+      }
+    }
+  }
+
+  // Z style
+
+  var ax_min = findMax(ax, ay, 3),
+    ax_max = findMax(ax, ay, 1),
+    bx_min = findMax(bx, by, 3),
+    bx_max = findMax(bx, by, 1);
+
+  var left = Math.max(ax_min, bx_min),
+    right = Math.min(ax_max, bx_max);
+  if (left <= right) {
+    if (Math.abs(ay - by) === 1) {
+      console.log('A');
+      return true;
+    }
+    for (var tx = left; tx <= right; tx++) {
+      if (ay < by) {
+        if (findMax(tx, ay, 2) >= (by - 1)) {
+          console.log('B');
+          return true;
+        }
+      } else {
+        if (findMax(tx, ay, 0) <= (by + 1)) {
+          console.log('C');
+          return true;
+        }
+      }
+    }
+  }
+
+  // S style
+  var ay_min = findMax(ax, ay, 0),
+    ay_max = findMax(ax, ay, 2),
+    by_min = findMax(bx, by, 0),
+    by_max = findMax(bx, by, 2);
+
+  var top = Math.max(ay_min, by_min),
+    bottom = Math.min(ay_max, by_max);
+  if (top <= bottom) {
+    if (Math.abs(ax - bx) === 1) {
+      console.log('D');
+      return true;
+    }
+    for (var ty = top; ty <= bottom; ty++) {
+      if (ax < bx) {
+        if (findMax(ax, ty, 1) >= (bx - 1)) {
+          console.log('E');
+          return true;
+        }
+      } else {
+        if (findMax(ax, ty, 3) <= (bx + 1)) {
+          console.log('F');
+          return true;
+        }
+      }
+    }
+  }
+
+  return false;
+}
 
 var Brick = Kaya.Sprite.Rectangular.extend({
   dataTypes: Kaya.Utilities.extend(Kaya.Sprite.Rectangular.prototype.dataTypes, {
@@ -50,18 +167,15 @@ var Brick = Kaya.Sprite.Rectangular.extend({
       return;
     }
     if (this.get('selected')) {
-      this.set('selected', false);
       return;
     }
     var selectedList = this.layer.where({selected: true});
     if (selectedList.length === 1) {
       var target = selectedList[0];
-      if (target.get('type') === this.get('type')) {
-        // matched
+      if (isMatch(this, target)) {
         this.explode();
         target.explode();
       } else {
-        // colors unmatched
         this.set('selected', false);
         target.set('selected', false);
       }
@@ -109,18 +223,20 @@ var GameStage = Kaya.Stage.extend({
     this.attach(brickLayer);
     var brickTypes = [];
     for (var i = 0; i < 140; i++) {
-      if (i < 70) {
+      if (i < 50) {
         brickTypes[i] = 0;
-      } else {
+      } else if (i < 100) {
         brickTypes[i] = 1;
+      } else {
+        brickTypes[i] = 2;
       }
     }
     brickTypes.sort(function() {
       return Math.round(Math.random());
     });
-    for (var top = 0; top < 10; top++) {
-      for (var left = 0; left < 14; left++) {
-        brickLayer.attach(createBrick(brickTypes[top*14 + left], left, top));
+    for (var top = 0; top < HEIGHT; top++) {
+      for (var left = 0; left < WIDTH; left++) {
+        brickLayer.attach(createBrick(brickTypes[top*WIDTH + left], left, top));
       }
     }
   }

@@ -1,11 +1,21 @@
 var WIDTH = 14;
 var HEIGHT = 10;
+var LEVEL = {
+  0: 20,
+  1: 20,
+  2: 20,
+  3: 20,
+  4: 30,
+  5: 30
+};
 
 var BrickColor = [
   '#F00',
   '#0F0',
   '#00F',
-  '#FFF'
+  '#FF0',
+  '#0FF',
+  '#F0F'
 ];
 
 function isMatch(a, b) {
@@ -222,13 +232,13 @@ var GameStage = Kaya.Stage.extend({
     var brickLayer = new Kaya.Layer();
     this.attach(brickLayer);
     var brickTypes = [];
-    for (var i = 0; i < 140; i++) {
-      if (i < 50) {
-        brickTypes[i] = 0;
-      } else if (i < 100) {
-        brickTypes[i] = 1;
-      } else {
-        brickTypes[i] = 2;
+    var total = 0;
+    for (var type in LEVEL) {
+      if (LEVEL.hasOwnProperty(type)) {
+        for (var i = 0; i < LEVEL[type]; i++) {
+          brickTypes[total + i] = type;
+        }
+        total += LEVEL[type];
       }
     }
     Kaya.Utilities.shuffle(brickTypes);

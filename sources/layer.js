@@ -51,6 +51,10 @@ Kaya.Layer = Kaya.Object.extend({
     return false;
   },
 
+  childById: function(id) {
+    return this._children[id];
+  },
+
   eachChild: function(callback) {
     this._children.forEach(callback, this);
   },

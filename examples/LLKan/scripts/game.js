@@ -231,9 +231,7 @@ var GameStage = Kaya.Stage.extend({
         brickTypes[i] = 2;
       }
     }
-    brickTypes.sort(function() {
-      return Math.round(Math.random());
-    });
+    Kaya.Utilities.shuffle(brickTypes);
     for (var top = 0; top < HEIGHT; top++) {
       for (var left = 0; left < WIDTH; left++) {
         brickLayer.attach(createBrick(brickTypes[top*WIDTH + left], left, top));

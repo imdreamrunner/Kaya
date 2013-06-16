@@ -65,6 +65,9 @@ Kaya.Object = Kaya.Class.extend({
       this._changes = changed;
       if (!silent) {
         this.trigger('change');
+        for (var name in changed) {
+          this.trigger('change:' + name);
+        }
       }
     }
     return this;

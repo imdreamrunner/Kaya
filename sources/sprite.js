@@ -4,11 +4,13 @@
 
 Kaya.Sprite = Kaya.Object.extend({
   constructor: function(properties) {
+    properties['hover'] = false;
     this.set(properties);
 
     this.on('refresh', this.refresh);
     this.on('render', this.renderWrapper);
     this.on('touchEvent', this.touchEventHandler);
+    this.on('mouseMove', this.mouseMoveHandler);
   },
 
   run: function(layer) {
@@ -38,7 +40,7 @@ Kaya.Sprite = Kaya.Object.extend({
   },
 
   touchEventHandler: function(event, touch) {
-    if (this.isTouched(touch)) {
+    if (this.isOver(touch)) {
       touch['offsetX'] = touch.x - this.get('x');
       touch['offsetY'] = touch.y - this.get('y');
       this.trigger('touch', touch);
@@ -48,7 +50,11 @@ Kaya.Sprite = Kaya.Object.extend({
     }
   },
 
-  isTouched: function(touch) {
+  mouseMoveHandler: function(event, position) {
+    this.set('hover', this.isOver(position));
+  },
+
+  isOver: function(touch) {
     return false;
   },
 

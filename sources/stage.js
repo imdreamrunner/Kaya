@@ -4,6 +4,7 @@ Kaya.Stage = Kaya.Object.extend({
 
     this.on('refresh', this.refresh);
     this.on('touchEvent', this.touchEventHandler);
+    this.on('mouseMove', this.mouseMoveHandler);
   },
 
   run: function(app) {
@@ -84,6 +85,12 @@ Kaya.Stage = Kaya.Object.extend({
     this.eachLayer(function(layer) {
       layer.trigger('touchEvent', touch);
     });
+  },
+
+  mouseMoveHandler: function(event, position) {
+    this.eachLayer(function(layer) {
+      layer.trigger('mouseMove', position);
+    })
   },
 
   remove: function() {

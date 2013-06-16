@@ -18,7 +18,7 @@ Kaya.Sprite.Text = Kaya.Sprite.extend({
     this.actualWidth = this.context.measureText(this.get('text')).width;
   },
 
-  isTouched: function(touch) {
+  isOver: function(touch) {
     return Math.abs(this.get('x') - touch.x) * 2 < this.actualWidth
       && Math.abs(this.get('y') - touch.y) * 2 < this.get('size');
   }

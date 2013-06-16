@@ -14,7 +14,7 @@ Kaya.Sprite.Image = Kaya.Sprite.extend({
     this.context.drawImage(this.app.resources.images(this.get('file')), - width/2, - height/2, width, height);
   },
 
-  isTouched: function(touch) {
+  isOver: function(touch) {
     return Math.abs(this.get('x') - touch.x) * 2 <= this.get('width')
       && Math.abs(this.get('y') - touch.y) * 2 <= this.get('height');
   }

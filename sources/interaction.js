@@ -21,12 +21,23 @@ Kaya.Interaction.TouchEvent = Kaya.Class.extend({
       this.app.DOM.appendChild(this.touchObject);
     }
 
+    this.touchObject.addEventListener('mousemove', function(e) {
+      that.mouseMove.call(that, e);
+    });
     this.touchObject.addEventListener('mousedown', function(e) {
       that.mouseDown.call(that, e);
     });
     this.touchObject.addEventListener('touchstart', function(e) {
-      that.touchHandler.call(this, e);
+      that.touchHandler.call(that, e);
     });
+  },
+
+  mouseMove: function(e) {
+    var position = {
+      x: e.offsetX || e.layerX,
+      y: e.offsetY || e.layerY
+    };
+    this.app.trigger('mouseMove', position);
   },
 
   mouseDown: function(e) {

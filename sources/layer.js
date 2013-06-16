@@ -4,6 +4,7 @@ Kaya.Layer = Kaya.Object.extend({
     this.changed = false;
     this.on('refresh', this.refresh);
     this.on('touchEvent', this.touchEventHandler);
+    this.on('mouseMove', this.mouseMoveHandler);
   },
 
   run: function(parent){
@@ -79,6 +80,12 @@ Kaya.Layer = Kaya.Object.extend({
   touchEventHandler: function(event, touch) {
     this.eachChild(function(child) {
       child.trigger('touchEvent', touch);
+    });
+  },
+
+  mouseMoveHandler: function(event, position) {
+    this.eachChild(function(child) {
+      child.trigger('mouseMove', position);
     });
   },
 

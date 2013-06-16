@@ -24,6 +24,7 @@ Kaya.App = Kaya.Object.extend({
 
     // Create touch event listener.
     this.on('touchEvent', this.touchEventHandler);
+    this.on('mouseMove', this.mouseMoveHandler);
 
     // Create interval.
     this.on('refresh', this.refresh);
@@ -67,6 +68,12 @@ Kaya.App = Kaya.Object.extend({
   touchEventHandler: function(event, touch) {
     if (this.currentStage) {
       this.currentStage.trigger('touchEvent', touch);
+    }
+  },
+
+  mouseMoveHandler: function(event, position) {
+    if (this.currentStage) {
+      this.currentStage.trigger('mouseMove', position);
     }
   },
 

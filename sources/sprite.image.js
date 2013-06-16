@@ -4,14 +4,19 @@ Kaya.Sprite.Image = Kaya.Sprite.extend({
     y: 'Float',
     width: 'Float',
     height: 'Float',
-    file: 'String'
+    file: 'String',
+    hoverFile: 'String'
   },
 
   render: function() {
     this._super();
     var width = this.get('width');
     var height = this.get('height');
-    this.context.drawImage(this.app.resources.images(this.get('file')), - width/2, - height/2, width, height);
+    if (this.get('hoverFile') && this.get('hover')) {
+      this.context.drawImage(this.app.resources.images(this.get('hoverFile')), - width/2, - height/2, width, height);
+    } else {
+      this.context.drawImage(this.app.resources.images(this.get('file')), - width/2, - height/2, width, height);
+    }
   },
 
   isOver: function(touch) {

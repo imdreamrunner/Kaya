@@ -17,10 +17,8 @@ var WelcomeStage = Kaya.Stage.extend({
       y: 400,
       width: 160,
       height: 40,
-      file: 'images/buttonPlay.png'
-    });
-    playButton.on('change:hover', function(){
-      console.log('xixixi');
+      file: 'images/buttonPlay.png',
+      hoverFile: 'images/buttonPlayHover.png'
     });
     playButton.on('touch', function(event, touch) {
       app.runStage(new GameStage);

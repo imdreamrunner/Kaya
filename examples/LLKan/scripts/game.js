@@ -1,15 +1,25 @@
 var WIDTH = 14;
 var HEIGHT = 10;
+/*
+0: 16,
+1: 16,
+2: 16,
+3: 16,
+4: 16,
+5: 16,
+6: 16,
+7: 14,
+*/
 var LEVEL = {
   0: 16,
-  1: 16,
-  2: 16,
-  3: 16,
-  4: 16,
-  5: 16,
-  6: 16,
-  7: 14,
-  8: 14
+  9: 16,
+  10: 16,
+  11: 16,
+  12: 16,
+  13: 16,
+  14: 16,
+  15: 14,
+  16: 14
 };
 
 
@@ -43,6 +53,8 @@ var Brick = Kaya.Sprite.Image.extend({
   constructor: function() {
     this._super.apply(this, arguments);
     this.set({
+      hoverWidth: 39,
+      hoverHeight: 39,
       'width': 40,
       'height': 40,
       'exploded': false,
@@ -151,10 +163,10 @@ var GameStage = Kaya.Stage.extend({
     this.attach(layer);
     var text = new Kaya.Sprite.Text({
       text: 'Level 0',
-      x: 360,
-      y: 50,
+      x: 135,
+      y: 41,
       font: 'Arial',
-      size: 30,
+      size: 24,
       color: '#FFF'
     });
     layer.attach(text);

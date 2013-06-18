@@ -23,7 +23,9 @@ Kaya.Sprite.Image = Kaya.Sprite.extend({
   },
 
   isOver: function(touch) {
-    return Math.abs(this.get('x') - touch.x) * 2 <= this.get('width')
-      && Math.abs(this.get('y') - touch.y) * 2 <= this.get('height');
+    var width = this.get('hoverWidth') || this.get('width');
+    var height = this.get('hoverHeight') || this.get('height');
+    return Math.abs(this.get('x') - touch.x) * 2 <= width
+      && Math.abs(this.get('y') - touch.y) * 2 <= height;
   }
 });

@@ -10,6 +10,9 @@ Kaya.Sprite.Image = Kaya.Sprite.extend({
 
   render: function() {
     this._super();
+    if (this.get('alpha') !== undefined) {
+      this.context.globalAlpha = this.get('alpha');
+    }
     var width = this.get('width');
     var height = this.get('height');
     if (this.get('hoverFile') && this.get('hover')) {

@@ -1,22 +1,16 @@
 var WIDTH = 14;
 var HEIGHT = 10;
 var LEVEL = {
-  0: 20,
-  1: 20,
-  2: 20,
-  3: 20,
-  4: 30,
-  5: 30
+  0: 16,
+  1: 16,
+  2: 16,
+  3: 16,
+  4: 16,
+  5: 16,
+  6: 16,
+  7: 14,
+  8: 14
 };
-
-var BrickColor = [
-  '#F00',
-  '#0F0',
-  '#00F',
-  '#FF0',
-  '#0FF',
-  '#F0F'
-];
 
 
 var Fire = Kaya.Sprite.Rectangular.extend({
@@ -39,7 +33,7 @@ var Fire = Kaya.Sprite.Rectangular.extend({
   }
 });
 
-var Brick = Kaya.Sprite.Rectangular.extend({
+var Brick = Kaya.Sprite.Image.extend({
   dataTypes: Kaya.Utilities.extend(Kaya.Sprite.Rectangular.prototype.dataTypes, {
     top: 'Integer',
     left: 'Integer',
@@ -55,25 +49,44 @@ var Brick = Kaya.Sprite.Rectangular.extend({
       'selected': false
     });
     this.update();
-    this.on('change', this.onChange);
+    this.on('change:hover', this.onHover);
+    this.on('change:type', this.update);
+    this.on('change:selected', this.onSelect);
   },
 
-  onChange: function() {
-    if (this.hasChanged('type')) {
-      this.update();
+  onHover: function() {
+    if (this.get('hover')) {
+      this.set({
+        width: 36,
+        height: 36
+      });
+    } else if(!this.get('selected')) {
+      this.set({
+        width: 40,
+        height: 40
+      });
     }
-    if (this.hasChanged('selected')) {
-      if (this.get('selected')) {
-        this.set('alpha', 0.8);
-      } else {
-        this.set('alpha', 1);
-      }
+  },
+
+  onSelect: function() {
+    if (this.get('selected')) {
+      this.set({
+        width: 36,
+        height: 36,
+        alpha: 0.6
+      });
+    } else {
+      this.set({
+        width: 40,
+        height: 40,
+        alpha: 1
+      });
     }
   },
 
   update: function() {
     this.set({
-      'color': BrickColor[this.get('type')],
+      'file': 'images/' + this.get('type') + '.png',
       'x': 100 + this.get('left') * 40,
       'y': 100 + this.get('top') * 40
     });
@@ -104,6 +117,11 @@ var Brick = Kaya.Sprite.Rectangular.extend({
 
   explode: function() {
     if (!this.get('exploded')) {
+      this.set({
+        width: 36,
+        height: 36,
+        alpha: 0.6
+      });
       this.runAction(new Kaya.Action.FadeTo(0, 500));
       this.set({
         'exploded': true,

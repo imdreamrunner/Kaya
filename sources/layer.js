@@ -8,10 +8,14 @@ Kaya.Layer = Kaya.Object.extend({
   },
 
   run: function(parent){
+    var that = this;
     this.parent = parent;
     this.app = parent.app;
     this.createCanvas();
     this.changed = true;
+    this.eachChild(function(child) {
+      child.run(that);
+    });
     if (this.initialize) {
       this.initialize.call(this);
     }
@@ -37,7 +41,9 @@ Kaya.Layer = Kaya.Object.extend({
 
     this.listenTo(child, 'change', this.change);
 
-    child.run(this);
+    if (this.parent) {
+      child.run(this);
+    }
     this._children.push(child);
   },
 

@@ -118,6 +118,17 @@ var fireLayer = new Kaya.Layer();
 
 var GameStage = Kaya.Stage.extend({
   initialize: function() {
+    var bgLayer = new Kaya.Layer();
+    var bgImage = new Kaya.Sprite.Image({
+      x: 360,
+      y: 270,
+      width: 720,
+      height: 540,
+      file: 'images/gameBg.png'
+    });
+    bgLayer.attach(bgImage);
+    this.attach(bgLayer);
+
     var layer = new Kaya.Layer();
     this.attach(layer);
     var text = new Kaya.Sprite.Text({

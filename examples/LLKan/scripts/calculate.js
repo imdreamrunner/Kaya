@@ -16,6 +16,7 @@ function isMatch(a, b) {
   var bx = b.get('left');
   var by = b.get('top');
   var t;
+  /*
   if (ax > bx) {
     t = bx;
     bx = ax;
@@ -24,6 +25,7 @@ function isMatch(a, b) {
     by = ay;
     ay = t;
   }
+  */
 
   function findMax(startX, startY, direction) {
     var vertical = direction === 0 || direction === 2;
@@ -115,6 +117,7 @@ function findPath(a, b) {
   var bx = b.get('left');
   var by = b.get('top');
   var t;
+  /*
   if (ax > bx) {
     t = bx;
     bx = ax;
@@ -123,6 +126,7 @@ function findPath(a, b) {
     by = ay;
     ay = t;
   }
+  */
 
   function findMax(startX, startY, direction) {
     var vertical = direction === 0 || direction === 2;
@@ -161,22 +165,33 @@ function findPath(a, b) {
   var left = Math.max(ax_min, bx_min),
     right = Math.min(ax_max, bx_max);
   if (left <= right) {
+    var possibleX = [];
     for (var tx = left; tx <= right; tx++) {
       if (ay < by) {
         if (findMax(tx, ay, 2) >= (by - 1)) {
-          return {
-            type: 0,
-            x: tx
-          };
+          possibleX.push(tx);
         }
       } else {
         if (findMax(tx, ay, 0) <= (by + 1)) {
-          return {
-            type: 0,
-            x: tx
-          };
+          possibleX.push(tx);
         }
       }
+    }
+    if (possibleX.length) {
+      console.log(possibleX);
+      var minX = possibleX[0];
+      var min = Math.abs(ax - minX) + Math.abs(bx - minX);
+      for (var i = 1; i < possibleX.length; i++) {
+        var newMin = Math.abs(ax - possibleX[i]) + Math.abs(bx - possibleX[i]);
+        if (newMin < min) {
+          min = newMin;
+          minX = possibleX[i];
+        }
+      }
+      return {
+        type: 0,
+        x: minX
+      };
     }
   }
 
@@ -297,4 +312,9 @@ function findMatch(layer) {
     }
   }
   return [];
+}
+
+function haveMatch(layer) {
+  var match = findMatch(layer);
+  return match.length === 2;
 }

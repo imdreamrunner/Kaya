@@ -72,10 +72,12 @@ Kaya.Layer = Kaya.Object.extend({
 
   where: function(properties) {
     return this.filter(function(child) {
-      for (var name in properties) {
-        if (properties.hasOwnProperty(name)) {
-          if (child.get(name) !== properties[name]) {
-            return false;
+      if (typeof properties !== 'undefined') {
+        for (var name in properties) {
+          if (properties.hasOwnProperty(name)) {
+            if (child.get(name) !== properties[name]) {
+              return false;
+            }
           }
         }
       }

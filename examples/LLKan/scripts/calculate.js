@@ -213,6 +213,8 @@ function findPath(a, b) {
 
 
 function drawFire(a, b) {
+  var newFires = [];
+
   var layer = a.layer;
   var ax = a.get('left');
   var ay = a.get('top');
@@ -223,60 +225,76 @@ function drawFire(a, b) {
   if (path.type === 0) {
     stepX = ax < path.x ? 1 : -1;
     for (var i = ax; i !== path.x; i += stepX) {
-      fireLayer.attach(new Fire({
+      newFires.push(new Fire({
         top: ay,
         left: i
       }));
     }
     stepY = ay < by ? 1 : -1;
     for (var i = ay; i !== by; i += stepY) {
-      fireLayer.attach(new Fire({
+      newFires.push(new Fire({
         top: i,
         left: path.x
       }));
     }
     stepX = path.x < bx ? 1 : -1;
     for (var i = path.x; i !== bx; i += stepX) {
-      fireLayer.attach(new Fire({
+      newFires.push(new Fire({
         top: by,
         left: i
       }));
     }
-    fireLayer.attach(new Fire({
+    newFires.push(new Fire({
       top: by,
       left: bx
     }));
   } else {
     stepY = ay < path.y ? 1 : -1;
     for (var i = ay; i !== path.y; i += stepY) {
-      fireLayer.attach(new Fire({
+      newFires.push(new Fire({
         top: i,
         left: ax
       }));
     }
     stepX = ax < bx ? 1 : -1;
     for (var i = ax; i !== bx; i += stepX) {
-      fireLayer.attach(new Fire({
+      newFires.push(new Fire({
         top: path.y,
         left: i
       }));
     }
     stepY = path.y < by ? 1 : -1;
     for (var i = path.y; i !== by; i += stepY) {
-      fireLayer.attach(new Fire({
+      newFires.push(new Fire({
         top: i,
         left: bx
       }));
     }
-    fireLayer.attach(new Fire({
+    newFires.push(new Fire({
       top: by,
       left: bx
     }));
   }
-  fireLayer.eachChild(function(sprite) {
+  newFires.forEach(function(sprite) {
+    fireLayer.attach(sprite);
     sprite.runAction(new Kaya.Action.Queue([
       new Kaya.Action.FadeOut(1000),
       new Kaya.Action.Remove()
     ]));
   });
+}
+
+function findMatch(layer) {
+  var bricks = layer.where({exploded: false});
+  var total = bricks.length;
+  var random = Math.floor(Math.random() * total);
+  for (var i = 0; i < total; i++) {
+    var temp = (i + random) % total;
+    for (var j = temp + 1; j < total; j++) {
+      if (isMatch(bricks[temp], bricks[j])) {
+        return [bricks[temp], bricks[j]];
+      }
+    }
+  }
+  return [];
 }

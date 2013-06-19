@@ -170,6 +170,13 @@ var GameStage = Kaya.Stage.extend({
       size: 24,
       color: '#FFF'
     });
+    text.on('touch', function() {
+      var match = findMatch(brickLayer);
+      if (match.length) {
+        match[0].select();
+        match[1].select();
+      }
+    });
     layer.attach(text);
     function createBrick(type, left, top) {
       var brick = new Brick({

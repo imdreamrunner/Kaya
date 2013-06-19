@@ -82,11 +82,13 @@ var Brick = Kaya.Sprite.Image.extend({
 
   onSelect: function() {
     if (this.get('selected')) {
-      this.set({
-        width: 36,
-        height: 36,
-        alpha: 0.6
-      });
+      if (!this.get('exploded')) {
+        this.set({
+          width: 36,
+          height: 36,
+          alpha: 0.6
+        });
+      }
     } else {
       this.set({
         width: 40,
@@ -128,18 +130,17 @@ var Brick = Kaya.Sprite.Image.extend({
   },
 
   explode: function() {
-    if (!this.get('exploded')) {
-      this.set({
-        width: 36,
-        height: 36,
-        alpha: 0.6
-      });
-      this.runAction(new Kaya.Action.FadeTo(0, 500));
-      this.set({
-        'exploded': true,
-        'selected': false
-      });
-    }
+    this.set({
+      width: 36,
+      height: 36,
+      alpha: 0.6,
+      exploded: true,
+      selected: false
+    });
+    this.runAction(new Kaya.Action.Queue([
+      new Kaya.Action.FadeTo(0, 500),
+      new Kaya.Action.Remove()
+    ]));
   }
 });
 

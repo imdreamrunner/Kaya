@@ -178,7 +178,7 @@ function findPath(a, b) {
       }
     }
     if (possibleX.length) {
-      console.log(possibleX);
+      // console.log(possibleX);
       var minX = possibleX[0];
       var min = Math.abs(ax - minX) + Math.abs(bx - minX);
       for (var i = 1; i < possibleX.length; i++) {
@@ -204,21 +204,32 @@ function findPath(a, b) {
   var top = Math.max(ay_min, by_min),
     bottom = Math.min(ay_max, by_max);
   if (top <= bottom) {
+    var possibleY = [];
     for (var ty = top; ty <= bottom; ty++) {
       if (ax < bx) {
         if (findMax(ax, ty, 1) >= (bx - 1)) {
-          return {
-            type: 1,
-            y: ty
-          };
+          possibleY.push(ty);
         }
       } else {
         if (findMax(ax, ty, 3) <= (bx + 1)) {
-          return {
-            type: 1,
-            y: ty
-          };
+          possibleY.push(ty);
         }
+      }
+    }
+    if (possibleY.length) {
+      // console.log(possibleY);
+      var minY = possibleY[0];
+      var min = Math.abs(ay - minY) + Math.abs(by - minY);
+      for (var i = 1; i < possibleY.length; i++) {
+        var newMin = Math.abs(ay - possibleY[i]) + Math.abs(by - possibleY[i]);
+        if (newMin < min) {
+          min = newMin;
+          minY = possibleY[i];
+        }
+      }
+      return {
+        type: 1,
+        y: minY
       }
     }
   }

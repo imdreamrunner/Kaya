@@ -4,12 +4,16 @@ Kaya.Sprite.Rectangular = Kaya.Sprite.extend({
     y: 'Float',
     width: 'Float',
     height: 'Float',
+    rotate: 'Float',
     alpha: 'Float',
     color: 'Color'
   },
 
   render: function() {
     this._super();
+    if (typeof this.get('rotate') !== 'undefined') {
+      this.context.rotate(this.get('rotate'));
+    }
     var color = Kaya.Utilities.hexToRgb(this.get('color'));
     var alpha = typeof this.get('alpha') === 'undefined'? 1 : this.get('alpha');
     this.context.fillStyle = 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + alpha + ')';

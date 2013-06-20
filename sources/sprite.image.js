@@ -10,6 +10,9 @@ Kaya.Sprite.Image = Kaya.Sprite.extend({
 
   render: function() {
     this._super();
+    if (typeof this.get('rotate') !== 'undefined') {
+      this.context.rotate(this.get('rotate'));
+    }
     if (this.get('alpha') !== undefined) {
       this.context.globalAlpha = this.get('alpha');
     }

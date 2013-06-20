@@ -15,7 +15,8 @@ var WelcomeStage = Kaya.Stage.extend({
     layer.attach(sprite);
     var moveDownAction = new Kaya.Action.MoveTo(100, 500, 1500);
     var easeIn = new Kaya.Action.EaseIn(moveDownAction);
-    sprite.runAction(easeIn);
+    var scaleTo = new Kaya.Action.ScaleTo(150, 150, 1500);
+    sprite.runAction(scaleTo);
 
     var sprite2 = new Kaya.Sprite.Rectangular({
       width: 100,

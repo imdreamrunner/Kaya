@@ -7,7 +7,7 @@ Kaya.Action.Fade = Kaya.Action.Timing.extend({
 
   run: function(sprite) {
     this._super.apply(this, arguments);
-    this.origin = sprite.get('alpha') || 1;
+    this.origin = typeof sprite.get('alpha') !== 'undefined' ? sprite.get('alpha') : 1;
     this.length = this.duration;
     this.update();
   },

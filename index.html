@@ -29,21 +29,42 @@
       </header>
       <section>
         <h3>
-<a name="welcome-to-kaya" class="anchor" href="#welcome-to-kaya"><span class="octicon octicon-link"></span></a>Welcome to Kaya</h3>
+<a name="welcome-to-kaya" class="anchor" href="#welcome-to-kaya"><span class="octicon octicon-link"></span></a>Introducing Kaya</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<p>
+    Kaya is the name for a kind of coconut jam which is very popular in Southeast Asia, and it is also the name for another
+    HTML5 game engine. It is written in JavaScript and very easy to use.
+</p>
+<p>
+    To get a copy of Kaya, you may directly download it from the link on the left, or use the following command
+</p>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<pre><code>$ git clone https://github.com/imdreamrunner/Kaya.git
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
 <h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<a name="get-started" class="anchor" href="#get-started"><span class="octicon octicon-link"></span></a>Get Started</h3>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>To get started, create a directory and copy the "kaya.min.js" file to it.</p>
+
+<p>Then create an HTML file for the game. A typical game page would look like:</p>
+
+<pre><code><!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>My First Game</title>
+    <link rel="stylesheet" href="stylesheets/game.css" />
+</head>
+<body>
+<div id="Game"></div>
+<div id="refresh-rate">FPS: <span id="fps"></span></div>
+<script></script>
+<script src="scripts/kaya.min.js"></script>
+<script src="scripts/app.js"></script>
+</body>
+</html>
+</code></pre>
 
 <h3>
 <a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>

@@ -2,9 +2,9 @@
  * Class
  * Based on Simple JavaScript Inheritance
  * http://ejohn.org/blog/simple-javascript-inheritance/
+ *
+ * Modified to use Object.clone to replace new for inheritance.
  */
-
-var initializingClass = false;
 
 Kaya.Class = function() {};
 
@@ -14,10 +14,8 @@ Kaya.Class.extend = function(prop) {
   var _super = this.prototype;
 
   // Instantiate a base class (but only create the instance,
-  // don't run the init constructor)
-  initializingClass = true;
-  var prototype = new this();
-  initializingClass = false;
+  // don't run the init constructor
+  var prototype = Object.create(this.prototype);
 
   // Copy the properties over onto the new prototype
   for (var name in prop) {
@@ -45,15 +43,12 @@ Kaya.Class.extend = function(prop) {
 
   // The dummy class constructor
   function Class() {
-    // All construction is actually done in the initialize method
-    if (!initializingClass) {
-      // Generate an unique id for every class.
-      this._id = Kaya.uniqueId();
-      // Call the initialize method.
+    // Generate an unique id for every class.
+    this._id = Kaya.uniqueId();
+    // Call the initialize method.
 
-      if (this.constructor) {
-        this.constructor.apply(this, arguments);
-      }
+    if (this.constructor) {
+      this.constructor.apply(this, arguments);
     }
   }
 

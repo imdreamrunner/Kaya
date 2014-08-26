@@ -20,32 +20,33 @@ Kaya.Class.extend = function(prop) {
   // Copy the properties over onto the new prototype
   for (var name in prop) {
     // Check if we're overwriting an existing function
-    prototype[name] = typeof prop[name] === "function" &&
-      typeof _super[name] === "function" && fnTest.test(prop[name]) ?
-      (function (name, fn) {
-        return function () {
-          var tmp = this._super;
+    if (prop.hasOwnProperty(name)) {
+      if (typeof prop[name] === "function") {
+        prototype[name] = (function (name, fn) {
+          return function () {
+            // Add a new ._super() method that is the same method
+            // but on the super-class
+            this._super = _super[name];
 
-          // Add a new ._super() method that is the same method
-          // but on the super-class
-          this._super = _super[name];
+            // The method only need to be bound temporarily, so we
+            // remove it when we're done executing
+            var ret = fn.apply(this, arguments);
 
-          // The method only need to be bound temporarily, so we
-          // remove it when we're done executing
-          var ret = fn.apply(this, arguments);
-          this._super = tmp;
+            delete this['_super'];
 
-          return ret;
-        };
-      })(name, prop[name]) :
-      prop[name];
+            return ret;
+          };
+        })(name, prop[name]);
+      } else {
+        prototype[name] = prop[name];
+      }
+    }
   }
 
   // The dummy class constructor
   function Class() {
     // Generate an unique id for every class.
     this._id = Kaya.uniqueId();
-    // Call the initialize method.
 
     if (this.constructor) {
       this.constructor.apply(this, arguments);
@@ -56,7 +57,7 @@ Kaya.Class.extend = function(prop) {
   Class.prototype = prototype;
 
   // Enforce the constructor to be what we expect
-  // Class.prototype.constructor = Class;
+  Class.constructor = Class;
 
   Class.extend = Kaya.Class.extend;
   Class.join = Kaya.Class.join;

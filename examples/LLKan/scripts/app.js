@@ -40,3 +40,5 @@ var App = Kaya.App.extend({
 });
 
 var app = new App();
+
+console.log(app);

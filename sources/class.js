@@ -10,7 +10,7 @@ Kaya.Class = function() {};
 
 // Return a sub class.
 Kaya.Class.extend = function(prop) {
-  var fnTest = /\b_super\b/;
+  // var fnTest = /\b_super\b/;
   var _super = this.prototype;
 
   // Instantiate a base class (but only create the instance,

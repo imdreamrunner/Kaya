@@ -1,13 +1,13 @@
 Kaya.App = Kaya.Object.extend({
-  beforeInitialize: function() {
+  _beforeInitialize: function() {
     // Read documentObject
     if (!this.documentObject) {
       throw new Error('No app frame is specified.');
     }
 
-    // Create DOM object
-    this.DOM = document.querySelector(this.documentObject);
-    if (this.DOM === null) {
+    // Create _DOM object
+    this._DOM = document.querySelector(this.documentObject);
+    if (this._DOM === null) {
       throw new Error('App document object is not found.');
     }
 
@@ -15,18 +15,18 @@ Kaya.App = Kaya.Object.extend({
     this.size = this.size || {};
     this.size.width = this.size.width || 400;
     this.size.height = this.size.height || 300;
-    this.DOM.style.backgroundColor = this.background || '#000000';
-    this.DOM.style.width = this.size.width + 'px';
-    this.DOM.style.height = this.size.height + 'px';
+    this._DOM.style.backgroundColor = this.background || '#000000';
+    this._DOM.style.width = this.size.width + 'px';
+    this._DOM.style.height = this.size.height + 'px';
 
-    this.canvas = document.createElement('canvas');
-    this.canvas.width  = this.size.width;
-    this.canvas.height = this.size.height;
-    this.DOM.appendChild(this.canvas);
-    this.context = this.canvas.getContext('2d');
+    this._canvas = document.createElement('canvas');
+    this._canvas.width  = this.size.width;
+    this._canvas.height = this.size.height;
+    this._DOM.appendChild(this._canvas);
+    this._context = this._canvas.getContext('2d');
   },
 
-  afterInitialize: function() {
+  _afterInitialize: function() {
     // Do refresh
     var that = this;
     var lastRefresh = new Date().getTime();
@@ -35,7 +35,7 @@ Kaya.App = Kaya.Object.extend({
       var delta = currentTime - lastRefresh;
       lastRefresh = currentTime;
       that.trigger("refresh", delta);
-      window.requestAnimationFrame(refresh, that.DOM);
+      window.requestAnimationFrame(refresh, that._DOM);
     };
     refresh();
 
@@ -50,11 +50,11 @@ Kaya.App = Kaya.Object.extend({
   },
 
   runStage: function(stage) {
-    if (this.currentStage) {
+    if (this._currentStage) {
       stage.trigger("leave");
     }
-    this.currentStage = stage;
-    stage.app = this;
+    this._currentStage = stage;
+    stage._app = this;
     stage.trigger("enter");
   }
 });

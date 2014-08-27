@@ -84,7 +84,7 @@ var sprite = new Kaya.Sprite.Rectangle({
   },
   width: 50,
   height: 50,
-  lazyRender: true
+  lazyRender: false
 });
 
 var stage = new Kaya.Stage({
@@ -106,3 +106,26 @@ var app = new Kaya.App({
     sprite.rerender = true;
   }
 });
+
+/*
+app.on("refresh", function(delta) {
+  sprite.x += 50/delta;
+  if (sprite.x > 400) {
+    sprite.x = 0;
+  }
+});
+*/
+
+var move = new Kaya.Action.Move({
+  x: 100,
+  y: 100,
+  duration: 1000,
+  sprite: sprite,
+  app: app
+});
+
+move.start();
+
+console.log(app);
+console.log(stage);
+console.log(sprite);

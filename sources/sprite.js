@@ -1,24 +1,18 @@
 Kaya.Sprite = Kaya.Object.extend({
-  beforeInitialize: function() {
-  },
-
-  afterInitialize: function() {
-  },
-
-  renderWrapper: function(context, width, height) {
+  _renderWrapper: function(context, width, height) {
     if (this.lazyRender) {
-      if (this.rerender || !this.lazyRenderCanvas) {
-        this.doRender(this.lazyRenderContext(width, height));
+      if (this.rerender || !this._lazyRenderCanvas) {
+        this._doRender(this._lazyRenderContext(width, height));
         this.rerender = false;
       } else {
-        context.drawImage(this.lazyRenderCanvas, 0, 0);
+        context.drawImage(this._lazyRenderCanvas, 0, 0);
       }
     } else {
-      this.doRender(context);
+      this._doRender(context);
     }
   },
 
-  doRender: function(context) {
+  _doRender: function(context) {
     // Save the context drawing center.
     context.save();
     // Move the drawing center.
@@ -31,16 +25,15 @@ Kaya.Sprite = Kaya.Object.extend({
     context.restore();
   },
 
-  lazyRenderContext: function(width, height) {
-    if (!this.lazyRenderCanvas) {
-      this.lazyRenderCanvas = document.createElement('canvas');
-      this.lazyRenderCanvas.width  = width;
-      this.lazyRenderCanvas.height = height;
+  _lazyRenderContext: function(width, height) {
+    if (!this._lazyRenderCanvas) {
+      this._lazyRenderCanvas = document.createElement('canvas');
+      this._lazyRenderCanvas.width  = width;
+      this._lazyRenderCanvas.height = height;
     }
-    return this.lazyRenderCanvas.getContext('2d');
+    return this._lazyRenderCanvas.getContext('2d');
   },
 
   render: function(context) {
-
   }
 });

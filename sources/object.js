@@ -1,7 +1,7 @@
 Kaya.Object = Kaya.Class.extend({
   constructor: function(prop) {
     // Prepare for event
-    this.events = [];
+    this._events = [];
 
     // Override properties
     for (var m in prop) {
@@ -9,8 +9,8 @@ Kaya.Object = Kaya.Class.extend({
     }
 
     // Call beforeInitialize
-    if (this.beforeInitialize) {
-      this.beforeInitialize();
+    if (this._beforeInitialize) {
+      this._beforeInitialize();
     }
 
     // Run initialize
@@ -19,26 +19,26 @@ Kaya.Object = Kaya.Class.extend({
     }
 
     // Call afterInitialize
-    if (this.afterInitialize) {
-      this.afterInitialize();
+    if (this._afterInitialize) {
+      this._afterInitialize();
     }
   },
 
   on: function(event, listener) {
-    this.events[event] = this.events[event] || [];
-    this.events[event].push(listener);
+    this._events[event] = this._events[event] || [];
+    this._events[event].push(listener);
   },
 
   off: function(event, listener) {
-    if (this.events[event]) {
-      this.events[event].remove(listener);
+    if (this._events[event]) {
+      this._events[event].remove(listener);
     }
   },
 
   trigger: function() {
     var argumentList = Array.prototype.slice.call(arguments);
     argumentList.splice(0, 1);
-    var listeners = this.events[arguments[0]];
+    var listeners = this._events[arguments[0]];
     if (!listeners) return;
     listeners.forEach(function (listener) {
       listener.apply(this, argumentList);

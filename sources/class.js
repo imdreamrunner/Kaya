@@ -44,23 +44,19 @@ Kaya.Class.extend = function(prop) {
   }
 
   // The dummy class constructor
-  function Class() {
-    // Generate an unique id for every class.
-    this._id = Kaya.uniqueId();
-
+  function KayaObject() {
     if (this.constructor) {
       this.constructor.apply(this, arguments);
     }
   }
 
   // Populate our constructed prototype object
-  Class.prototype = prototype;
+  KayaObject.prototype = prototype;
 
   // Enforce the constructor to be what we expect
-  Class.constructor = Class;
+  KayaObject.constructor = KayaObject;
 
-  Class.extend = Kaya.Class.extend;
-  Class.join = Kaya.Class.join;
+  KayaObject.extend = Kaya.Class.extend;
 
-  return Class;
+  return KayaObject;
 };

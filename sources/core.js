@@ -7,7 +7,7 @@ var Kaya = window.Kaya = function() {};
 
 Kaya.version = '0.0.1';
 
-Kaya.debug = 1;
+Kaya.debug = true;
 
 
 var uniqueIdNumber = 0;

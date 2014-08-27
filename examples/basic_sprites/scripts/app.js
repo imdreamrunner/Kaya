@@ -1,3 +1,4 @@
+/*
 var WelcomeStage = Kaya.Stage.extend({
   initialize: function() {
     var layer = new Kaya.Layer();
@@ -58,7 +59,7 @@ var WelcomeStage = Kaya.Stage.extend({
 });
 
 var App = Kaya.App.extend({
-  documentObject: '#Game',
+  documentObject: '#game',
   size: {
     width: 1024,
     height: 768
@@ -69,3 +70,17 @@ var App = Kaya.App.extend({
 });
 
 var app = new App();
+
+*/
+
+var app = new Kaya.App({
+  documentObject: "#game",
+  size: {
+    width: 1024,
+    height: 768
+  },
+  initialize: function() {
+    console.log("app initialize");
+    console.log(this);
+  }
+});

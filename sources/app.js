@@ -35,8 +35,17 @@ Kaya.App = Kaya.Object.extend({
       var fpsObject = document.querySelector("#fps");
       var updateFPS = function(delta) {
         fpsObject.innerHTML = Math.round(1000 / delta);
-      }
+      };
       this.on("refresh", updateFPS);
     }
+  },
+
+  runStage: function(stage) {
+    if (this.currentStage) {
+      stage.trigger("leave");
+    }
+    this.currentStage = stage;
+    stage.app = this;
+    stage.trigger("enter");
   }
 });

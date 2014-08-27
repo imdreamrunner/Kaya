@@ -88,10 +88,7 @@ var sprite = new Kaya.Sprite.Rectangle({
 });
 
 var stage = new Kaya.Stage({
-  sprites: [sprite],
-  initialize: function() {
-    console.log("stage run");
-  }
+  sprites: [sprite]
 });
 
 var app = new Kaya.App({
@@ -99,13 +96,11 @@ var app = new Kaya.App({
   size: {
     width: 500,
     height: 400
-  },
-  initialize: function() {
-    console.log("app initialize");
-    this.runStage(stage);
-    sprite.rerender = true;
   }
 });
+
+app.runStage(stage);
+
 
 /*
 app.on("refresh", function(delta) {
@@ -115,6 +110,7 @@ app.on("refresh", function(delta) {
   }
 });
 */
+
 
 var move = new Kaya.Action.Move({
   x: 100,

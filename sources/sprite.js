@@ -1,18 +1,18 @@
 Kaya.Sprite = Kaya.Object.extend({
-  _renderWrapper: function(context, width, height) {
+  renderWrapper: function(context, width, height) {
     if (this.lazyRender) {
       if (this.rerender || !this._lazyRenderCanvas) {
-        this._doRender(this._lazyRenderContext(width, height));
+        this.translateAndRender(this.lazyRenderContext(width, height));
         this.rerender = false;
       } else {
         context.drawImage(this._lazyRenderCanvas, 0, 0);
       }
     } else {
-      this._doRender(context);
+      this.translateAndRender(context);
     }
   },
 
-  _doRender: function(context) {
+  translateAndRender: function(context) {
     // Save the context drawing center.
     context.save();
     // Move the drawing center.
@@ -25,7 +25,7 @@ Kaya.Sprite = Kaya.Object.extend({
     context.restore();
   },
 
-  _lazyRenderContext: function(width, height) {
+  lazyRenderContext: function(width, height) {
     if (!this._lazyRenderCanvas) {
       this._lazyRenderCanvas = document.createElement('canvas');
       this._lazyRenderCanvas.width  = width;

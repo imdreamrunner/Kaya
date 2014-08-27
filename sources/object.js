@@ -8,20 +8,12 @@ Kaya.Object = Kaya.Class.extend({
       this[m] = prop[m];
     }
 
-    // Call beforeInitialize
-    if (this._beforeInitialize) {
-      this._beforeInitialize();
-    }
-
     // Run initialize
     if (this.initialize) {
       this.initialize();
     }
 
-    // Call afterInitialize
-    if (this._afterInitialize) {
-      this._afterInitialize();
-    }
+    this.trigger("initialized");
   },
 
   on: function(event, listener) {

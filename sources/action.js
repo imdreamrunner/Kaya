@@ -1,5 +1,5 @@
 Kaya.Action = Kaya.Object.extend({
-  _afterInitialize: function() {
+  initialize: function() {
     if (!this.sprite) {
       throw new Error("Sprite is not defined");
     }
@@ -18,8 +18,8 @@ Kaya.Action = Kaya.Object.extend({
 });
 
 Kaya.Action.FiniteTime = Kaya.Action.extend({
-  _afterInitialize: function() {
-    this._super();
+  initialize: function() {
+    this._super.apply(this, this.arguments);
     if (!this.duration) {
       throw new Error("Duration is not defined for a finite action.");
     }
@@ -47,8 +47,8 @@ Kaya.Action.FiniteTime = Kaya.Action.extend({
 });
 
 Kaya.Action.Move = Kaya.Action.FiniteTime.extend({
-  _afterInitialize: function() {
-    this._super();
+  initialize: function() {
+    this._super.apply(this, this.arguments);
     this._startLocation = {
       x: this.sprite.x,
       y: this.sprite.y

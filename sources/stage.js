@@ -1,18 +1,17 @@
 Kaya.Stage = Kaya.Object.extend({
-  _beforeInitialize: function() {
+  initialize: function() {
+    var that = this;
+
     // Create empty sprite list.
     this.sprites = this.sprites || [];
-  },
 
-  _afterInitialize: function() {
-    var that = this;
     var refresh = function(delta) {
       // Clear _context
       that._app._context.clearRect(0, 0, that._app.size.width, that._app.size.width);
 
       // Render _context
       that.sprites.forEach(function(sprite) {
-        sprite._renderWrapper(that._app._context, that._app.size.width, that._app.size.height);
+        sprite.renderWrapper(that._app._context, that._app.size.width, that._app.size.height);
       });
 
     };

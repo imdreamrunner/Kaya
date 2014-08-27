@@ -1,5 +1,5 @@
 Kaya.App = Kaya.Object.extend({
-  _beforeInitialize: function() {
+  initialize: function() {
     // Read documentObject
     if (!this.documentObject) {
       throw new Error('No app frame is specified.');
@@ -24,9 +24,7 @@ Kaya.App = Kaya.Object.extend({
     this._canvas.height = this.size.height;
     this._DOM.appendChild(this._canvas);
     this._context = this._canvas.getContext('2d');
-  },
 
-  _afterInitialize: function() {
     // Do refresh
     var that = this;
     var lastRefresh = new Date().getTime();

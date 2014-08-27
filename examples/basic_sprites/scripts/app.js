@@ -73,6 +73,16 @@ var app = new App();
 
 */
 
+
+var app = new Kaya.App({
+  documentObject: "#game",
+  size: {
+    width: 500,
+    height: 400
+  }
+});
+
+
 var sprite = new Kaya.Sprite.Rectangle({
   x: 100,
   y: 100,
@@ -91,26 +101,7 @@ var stage = new Kaya.Stage({
   sprites: [sprite]
 });
 
-var app = new Kaya.App({
-  documentObject: "#game",
-  size: {
-    width: 500,
-    height: 400
-  }
-});
-
 app.runStage(stage);
-
-
-/*
-app.on("refresh", function(delta) {
-  sprite.x += 50/delta;
-  if (sprite.x > 400) {
-    sprite.x = 0;
-  }
-});
-*/
-
 
 var move = new Kaya.Action.Move({
   x: 100,

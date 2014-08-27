@@ -27,7 +27,7 @@ Kaya.Action.FiniteTime = Kaya.Action.extend({
   },
 
   start: function() {
-    that = this;
+    var that = this;
     this._updateFunction = function(delta) {
       if (that._passTime === 1) {
         that.trigger("finish");
@@ -41,9 +41,7 @@ Kaya.Action.FiniteTime = Kaya.Action.extend({
       that.update(progress);
     };
     this.app.on("refresh", this._updateFunction);
-  },
-
-  updateProgress: function(progress) {}
+  }
 });
 
 Kaya.Action.Move = Kaya.Action.FiniteTime.extend({

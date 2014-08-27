@@ -17,9 +17,7 @@ Kaya.Stage = Kaya.Object.extend({
 
       // Render context
       that.sprites.forEach(function(sprite) {
-        sprite.stage = that;
-        sprite.app = that.app;
-        sprite.renderWrapper();
+        sprite.renderWrapper(that.app.context, that.app.size.width, that.app.size.height);
       });
 
     };

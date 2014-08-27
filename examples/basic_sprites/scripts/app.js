@@ -83,7 +83,8 @@ var sprite = new Kaya.Sprite.Rectangle({
     a: 200
   },
   width: 50,
-  height: 50
+  height: 50,
+  lazyRender: true
 });
 
 var stage = new Kaya.Stage({
@@ -102,5 +103,6 @@ var app = new Kaya.App({
   initialize: function() {
     console.log("app initialize");
     this.runStage(stage);
+    sprite.rerender = true;
   }
 });

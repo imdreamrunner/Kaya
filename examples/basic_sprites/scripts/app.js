@@ -73,14 +73,34 @@ var app = new App();
 
 */
 
+var sprite = new Kaya.Sprite.Rectangle({
+  x: 100,
+  y: 100,
+  color: {
+    r: 0,
+    g: 200,
+    b: 200,
+    a: 200
+  },
+  width: 50,
+  height: 50
+});
+
+var stage = new Kaya.Stage({
+  sprites: [sprite],
+  initialize: function() {
+    console.log("stage run");
+  }
+});
+
 var app = new Kaya.App({
   documentObject: "#game",
   size: {
-    width: 1024,
-    height: 768
+    width: 500,
+    height: 400
   },
   initialize: function() {
     console.log("app initialize");
-    console.log(this);
+    this.runStage(stage);
   }
 });

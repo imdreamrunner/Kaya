@@ -15,6 +15,15 @@ Kaya.App = Kaya.Object.extend({
     this.size = this.size || {};
     this.size.width = this.size.width || 400;
     this.size.height = this.size.height || 300;
+    this.DOM.style.backgroundColor = this.background || '#000000';
+    this.DOM.style.width = this.size.width + 'px';
+    this.DOM.style.height = this.size.height + 'px';
+
+    this.canvas = document.createElement('canvas');
+    this.canvas.width  = this.size.width;
+    this.canvas.height = this.size.height;
+    this.DOM.appendChild(this.canvas);
+    this.context = this.canvas.getContext('2d');
   },
 
   afterInitialize: function() {

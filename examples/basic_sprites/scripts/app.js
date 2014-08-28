@@ -74,45 +74,70 @@ var app = new App();
 */
 
 
-var app = new Kaya.App({
-  documentObject: "#game",
-  size: {
-    width: 500,
-    height: 400
-  }
+var doraemon = new Kaya.Resource.Image({
+  src: "images/doraemon.jpg"
 });
 
-
-var sprite = new Kaya.Sprite.Rectangle({
-  x: 100,
-  y: 100,
-  color: {
-    r: 0,
-    g: 200,
-    b: 200,
-    a: 200
-  },
-  width: 50,
-  height: 50,
-  lazyRender: false
+var resources = new Kaya.ResourceLoader({
+  list: [doraemon]
 });
 
-var stage = new Kaya.Stage({
-  sprites: [sprite]
-});
+function game() {
+  var app = new Kaya.App({
+    documentObject: "#game",
+    size: {
+      width: 500,
+      height: 400
+    }
+  });
 
-app.runStage(stage);
+  var sprite = new Kaya.Sprite.Rectangle({
+    x: 100,
+    y: 100,
+    color: {
+      r: 0,
+      g: 200,
+      b: 200
+    },
+    alpha: 0.5,
+    width: 50,
+    height: 50,
+    lazyRender: false
+  });
 
-var move = new Kaya.Action.Move({
-  x: 100,
-  y: 100,
-  duration: 1000,
-  sprite: sprite,
-  app: app
-});
+  var image = new Kaya.Sprite.Image({
+    x: 250,
+    y: 200,
+    image: doraemon,
+    alpha: 0.5,
+    rotate: 0.5,
+    width: 200,
+    height: 200
+  });
 
-move.start();
+  var stage = new Kaya.Stage({
+    sprites: [sprite, image]
+  });
 
-console.log(app);
-console.log(stage);
-console.log(sprite);
+  app.runStage(stage);
+
+  var move = new Kaya.Action.Move({
+    x: 100,
+    y: 100,
+    duration: 1000,
+    sprite: sprite,
+    app: app
+  });
+
+  move.start();
+
+  console.log(app);
+  console.log(stage);
+  console.log(sprite);
+}
+
+resources.on("ready", game);
+
+resources.load();
+
+

@@ -21,5 +21,28 @@ Kaya.Resource.Image = Kaya.Resource.extend({
 });
 
 Kaya.ResourceLoader = Kaya.Object.extend({
+  initialize: function() {
+    var that = this;
 
+    if (!this.list) {
+      throw new Error("No resource list specified.");
+    }
+    this.size = this.list.length;
+
+    this.progress = 0;
+  },
+
+  load: function() {
+    var that = this;
+    this.list.forEach(function(resource){
+      resource.on("ready", function() {
+        that.progress += 1;
+        that.trigger("progress", that.progress, that.size);
+        if (that.progress === that.size) {
+          that.trigger("ready");
+        }
+      });
+      resource.load();
+    });
+  }
 });

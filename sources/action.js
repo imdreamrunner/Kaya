@@ -1,17 +1,17 @@
 Kaya.Action = Kaya.Object.extend({
   initialize: function() {
-    // Nothing here?
+    this._app = this.sprite._app;
   },
 
   update: function(delta) { },
 
   start: function() {
     this._updateFunction = this.update.bind(this);
-    this.app.on("refresh", this._updateFunction);
+    this._app.on("refresh", this._updateFunction);
   },
 
   pause: function() {
-    this.app.off("refresh", this._updateFunction);
+    this._app.off("refresh", this._updateFunction);
   }
 });
 
@@ -32,11 +32,11 @@ Kaya.Action.FiniteTime = Kaya.Action.extend({
       if (progress >= 1) {
         progress = 1;
         that.trigger("finish");
-        that.app.off("refresh", that._updateFunction);
+        that._app.off("refresh", that._updateFunction);
       }
       that.update(progress);
     }).bind(this);
-    this.app.on("refresh", this._updateFunction);
+    this._app.on("refresh", this._updateFunction);
   }
 });
 
@@ -85,12 +85,11 @@ Kaya.Action.Rotate = Kaya.Action.LinearGradient.extend({
 
 Kaya.Action.Loop = Kaya.Action.extend({
   initialize: function() {
-    this._super.apply(this, this.arguments);
     this.count = 0;
     if (!this.action) {
       throw new Error("Action is not defined");
     }
-    this.app = this.action.app;
+    this._app = this.action._app;
   },
 
   start: function() {

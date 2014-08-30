@@ -125,8 +125,7 @@ function game() {
     x: 300,
     y: 200,
     duration: 2000,
-    sprite: sprite,
-    app: app
+    sprite: sprite
   });
 
   move.start();
@@ -134,8 +133,7 @@ function game() {
   var Rotate = Kaya.Action.Rotate.extend({
     rotate: Math.PI * 2,
     duration: 3000,
-    sprite: image,
-    app: app
+    sprite: image
   });
 
   var infiniteRotate = new Kaya.Action.Loop({

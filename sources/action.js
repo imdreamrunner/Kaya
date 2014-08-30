@@ -1,8 +1,6 @@
 Kaya.Action = Kaya.Object.extend({
   initialize: function() {
-    if (!this.sprite) {
-      throw new Error("Sprite is not defined");
-    }
+    // Nothing here?
   },
 
   update: function(delta) { },
@@ -28,33 +26,88 @@ Kaya.Action.FiniteTime = Kaya.Action.extend({
 
   start: function() {
     var that = this;
-    this._updateFunction = function(delta) {
-      if (that._passTime === 1) {
-        that.trigger("finish");
-        return;
-      }
+    this._updateFunction = (function(delta) {
       that._passTime += delta;
       var progress = that._passTime / that.duration;
       if (progress >= 1) {
         progress = 1;
+        that.trigger("finish");
+        that.app.off("refresh", that._updateFunction);
       }
       that.update(progress);
-    };
+    }).bind(this);
     this.app.on("refresh", this._updateFunction);
   }
 });
 
-Kaya.Action.Move = Kaya.Action.FiniteTime.extend({
+Kaya.Action.LinearGradient = Kaya.Action.FiniteTime.extend({
   initialize: function() {
     this._super.apply(this, this.arguments);
-    this._startLocation = {
-      x: this.sprite.x,
-      y: this.sprite.y
+    if (!this.sprite) {
+      throw new Error("Sprite is not defined");
     }
   },
-
   update: function(progress) {
-    this.sprite.x = this._startLocation.x + this.x * progress;
-    this.sprite.y = this._startLocation.y + this.y * progress;
+    for (var prop in this.list) {
+      this.sprite[prop] = this.list[prop].from + this.list[prop].distance * progress;
+    }
   }
+});
+
+Kaya.Action.Move = Kaya.Action.LinearGradient.extend({
+  initialize: function() {
+    this._super.apply(this, this.arguments);
+    this.list = {
+      x: {
+        from: this.sprite.x,
+        distance: this.x
+      },
+      y: {
+        from: this.sprite.y,
+        distance: this.y
+      }
+    }
+  }
+});
+
+
+Kaya.Action.Rotate = Kaya.Action.LinearGradient.extend({
+  initialize: function() {
+    this._super.apply(this, this.arguments);
+    this.list = {
+      rotate: {
+        from: this.sprite.rotate || 0,
+        distance: this.rotate
+      }
+    }
+  }
+});
+
+Kaya.Action.Loop = Kaya.Action.extend({
+  initialize: function() {
+    this._super.apply(this, this.arguments);
+    this.count = 0;
+    this.startAction();
+    if (!this.action) {
+      throw new Error("Action is not defined");
+    }
+    this.app = this.action.app;
+  },
+
+  startAction: function() {
+    var that = this;
+    var tempAction = new this.action;
+    tempAction.on("finish", function() {
+      that.count += 1;
+      console.log("here?" + that.count)
+      if (that.times === -1 || that.count < that.times) {
+        // that.startAction();
+        // Can this prevent recursive?
+        console.log("here?");
+        setTimeout(that.startAction.bind(that), 0);
+      }
+    });
+    tempAction.start();
+  }
+
 });

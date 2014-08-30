@@ -110,7 +110,6 @@ function game() {
     y: 200,
     image: doraemon,
     alpha: 0.5,
-    rotate: 0.5,
     width: 200,
     height: 200
   });
@@ -122,14 +121,28 @@ function game() {
   app.runStage(stage);
 
   var move = new Kaya.Action.Move({
-    x: 100,
-    y: 100,
-    duration: 1000,
+    x: 300,
+    y: 200,
+    duration: 2000,
     sprite: sprite,
     app: app
   });
 
   move.start();
+
+  var Rotate = Kaya.Action.Rotate.extend({
+    rotate: Math.PI * 2,
+    duration: 3000,
+    sprite: image,
+    app: app
+  });
+
+  var infiniteRotate = new Kaya.Action.Loop({
+    action: Rotate,
+    times: -1
+  });
+
+  infiniteRotate.start();
 
   console.log(app);
   console.log(stage);

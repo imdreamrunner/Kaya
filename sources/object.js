@@ -23,7 +23,8 @@ Kaya.Object = Kaya.Class.extend({
 
   off: function(event, listener) {
     if (this._events[event]) {
-      this._events[event].remove(listener);
+      var i = this._events[event].indexOf(listener);
+      this._events[event].splice(i, 1);
     }
   },
 

@@ -87,11 +87,14 @@ Kaya.Action.Loop = Kaya.Action.extend({
   initialize: function() {
     this._super.apply(this, this.arguments);
     this.count = 0;
-    this.startAction();
     if (!this.action) {
       throw new Error("Action is not defined");
     }
     this.app = this.action.app;
+  },
+
+  start: function() {
+    this.startAction();
   },
 
   startAction: function() {
@@ -99,11 +102,9 @@ Kaya.Action.Loop = Kaya.Action.extend({
     var tempAction = new this.action;
     tempAction.on("finish", function() {
       that.count += 1;
-      console.log("here?" + that.count)
       if (that.times === -1 || that.count < that.times) {
         // that.startAction();
         // Can this prevent recursive?
-        console.log("here?");
         setTimeout(that.startAction.bind(that), 0);
       }
     });

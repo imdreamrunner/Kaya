@@ -1,5 +1,9 @@
 Kaya.Sprite = Kaya.Object.extend({
-  renderWrapper: function(context, width, height) {
+  renderWrapper: function() {
+    var context = this._app._context;
+    var width = this._app.size.width;
+    var height = this._app.size.height;
+
     if (this.lazyRender) {
       if (this.rerender || !this._lazyRenderCanvas) {
         this.translateAndRender(this.lazyRenderContext(width, height));

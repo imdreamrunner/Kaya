@@ -114,9 +114,10 @@ function game() {
     height: 200
   });
 
-  var stage = new Kaya.Stage({
-    sprites: [sprite, image]
-  });
+  var stage = new Kaya.Stage();
+
+  stage.addSprite(sprite, 1);
+  stage.addSprite(image, 2);
 
   app.runStage(stage);
 

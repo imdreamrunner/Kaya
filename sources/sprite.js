@@ -5,9 +5,9 @@ Kaya.Sprite = Kaya.Object.extend({
     var height = this._app.size.height;
 
     if (this.lazyRender) {
-      if (this.rerender || !this._lazyRenderCanvas) {
+      if (this._reRender || !this._lazyRenderCanvas) {
         this.translateAndRender(this.lazyRenderContext(width, height));
-        this.rerender = false;
+        this._reRender = false;
       } else {
         context.drawImage(this._lazyRenderCanvas, 0, 0);
       }
@@ -49,13 +49,24 @@ Kaya.Sprite = Kaya.Object.extend({
   render: function(context) {
   },
 
-  above: function(x, y) {
+  isAboveToCenter: function(x, y) {
     return Math.abs(x) * 2 <= this.width
         && Math.abs(y) * 2 <= this.height;
   },
 
-  aboveOnCanvas: function(x, y) {
+  isAbove: function(pointX, pointY) {
+    pointX -= this.x;
+    pointY -= this.y;
+    var newX = pointX, newY = pointY;
+    if (this.rotate) {
+      newX = pointX * Math.cos(this.rotate) + pointY * Math.sin(this.rotate);
+      newY = - pointX * Math.sin(this.rotate) + pointY * Math.cos(this.rotate);
+    }
+    return this.isAboveToCenter(newX, newY);
+  },
 
+  reRender: function() {
+    this._reRender = true;
   }
 });
 

@@ -83,12 +83,17 @@ var resources = new Kaya.ResourceLoader({
 });
 
 function game() {
+  var onTouch = function(x, y) {
+    console.log(image.isAbove(x, y));
+  };
+
   var app = new Kaya.App({
     documentObject: "#game",
     size: {
       width: 500,
       height: 400
-    }
+    },
+    touchHandlers: [onTouch]
   });
 
   var sprite = new Kaya.Sprite.Rectangle({

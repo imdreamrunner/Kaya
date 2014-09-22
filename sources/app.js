@@ -1,5 +1,7 @@
 Kaya.App = Kaya.Object.extend({
   initialize: function() {
+    var that = this;
+
     // Read documentObject
     if (!this.documentObject) {
       throw new Error('No app frame is specified.');
@@ -24,6 +26,16 @@ Kaya.App = Kaya.Object.extend({
     this._canvas.height = this.size.height;
     this._DOM.appendChild(this._canvas);
     this._context = this._canvas.getContext('2d');
+
+    // Handle touch event
+    this.touchHandlers = this.touchHandlers || [];
+    var touchEventHandler = function(e) {
+      that.touchHandlers.forEach(function(handler) {
+        handler(e.layerX, e.layerY);
+      })
+    };
+    this._canvas.addEventListener('mousedown', touchEventHandler);
+    this._canvas.addEventListener('touchstart', touchEventHandler);
 
     // Do refresh
     var that = this;

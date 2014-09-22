@@ -17,21 +17,28 @@ Kaya.App = Kaya.Object.extend({
     this.size = this.size || {};
     this.size.width = this.size.width || 400;
     this.size.height = this.size.height || 300;
+    this.displaySize = this.displaySize || {};
+    this.displaySize.width = this.displaySize.width || this.size.width;
+    this.displaySize.height = this.displaySize.height || this.size.height;
     this._DOM.style.backgroundColor = this.background || '#000000';
-    this._DOM.style.width = this.size.width + 'px';
-    this._DOM.style.height = this.size.height + 'px';
+    this._DOM.style.width = this.displaySize.width + 'px';
+    this._DOM.style.height = this.displaySize.height  + 'px';
 
     this._canvas = document.createElement('canvas');
     this._canvas.width  = this.size.width;
     this._canvas.height = this.size.height;
+    this._canvas.style.width = this.displaySize.width + 'px';
+    this._canvas.style.height = this.displaySize.height + 'px';
     this._DOM.appendChild(this._canvas);
     this._context = this._canvas.getContext('2d');
 
     // Handle touch event
     this.touchHandlers = this.touchHandlers || [];
+    var xRatio = this.size.width / this.displaySize.width;
+    var yRatio = this.size.height / this.displaySize.height;
     var touchEventHandler = function(e) {
       that.touchHandlers.forEach(function(handler) {
-        handler(e.layerX, e.layerY);
+        handler(e.layerX * xRatio, e.layerY * yRatio);
       })
     };
     this._canvas.addEventListener('mousedown', touchEventHandler);

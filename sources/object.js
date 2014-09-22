@@ -36,6 +36,10 @@ Kaya.Object = Kaya.Class.extend({
     listeners.forEach(function (listener) {
       listener.apply(this, argumentList);
     });
+  },
+
+  clone: function() {
+    return Kaya.Utilities.clone(this);
   }
 
 });

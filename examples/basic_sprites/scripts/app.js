@@ -109,15 +109,15 @@ function game() {
     x: 250,
     y: 200,
     image: doraemon,
-    alpha: 0.5,
+    alpha: 0.8,
     width: 200,
     height: 200
   });
 
   var stage = new Kaya.Stage();
 
-  stage.addSprite(sprite, 1);
-  stage.addSprite(image, 2);
+  stage.addSprite(sprite, 2);
+  stage.addSprite(image, 1);
 
   app.runStage(stage);
 
